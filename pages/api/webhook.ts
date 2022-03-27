@@ -7,6 +7,8 @@ export default async function handler(
   try {
     const { body } = req;
 
+    console.log(body);
+
     res.status(200).json({
       message: "success",
       body,
