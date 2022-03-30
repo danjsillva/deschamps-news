@@ -5,9 +5,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { body } = req;
+    const { body, method } = req;
 
-    console.log(body);
+    console.log(body, method);
 
     res.status(200).json({
       message: "success",
