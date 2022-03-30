@@ -14,6 +14,10 @@ export default async function handler(
 
     await client.json.set("body", ".", req.body);
 
+    const date = new Date(req.body.match(/\d{2}.[A-z]*.\d{4}/));
+
+    await client.json.set("date", ".", date);
+
     const postsHtml = req.body
       .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
       .match(/<p .*?<\/p>/gi);
@@ -33,7 +37,7 @@ export default async function handler(
         entities: [],
         keywords: [],
         likes: 0,
-        date: new Date(),
+        date,
       };
 
       await client.json.set(new Date().getTime().toString(), ".", post);
