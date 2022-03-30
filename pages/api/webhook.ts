@@ -36,29 +36,6 @@ export default async function handler(
 
       await client.json.set(new Date().getTime().toString(), ".", post);
     }
-    /* .map(async (item: string) => { */
-    /*   const text = item.replace(/(<([^>]+)>)/gi, ""); */
-    /*   const html = item */
-    /*     .replace(/ class=\".*?\"/gm, "") */
-    /*     .replace(/ style=\".*?\"/gm, ""); */
-    /*   const post = { */
-    /*     html, */
-    /*     text, */
-    /*     categories: [], */
-    /*     entities: [], */
-    /*     keywords: [], */
-    /*     likes: 0, */
-    /*     date: new Date(), */
-    /*   }; */
-
-    /*   const result = await client.json.set( */
-    /*     new Date().getTime().toString(), */
-    /*     ".", */
-    /*     post */
-    /*   ); */
-
-    /*   return result; */
-    /* }); */
 
     await client.quit();
 
