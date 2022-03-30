@@ -18,29 +18,24 @@ export default async function handler(
       .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
       .match(/<p .*?<\/p>/gi);
 
-    const posts = await Promise.all(
-      postsHtml.map(async (postHtml: string) => {
-        const text = postHtml.replace(/(<([^>]+)>)/gi, "");
-        const html = postHtml
-          .replace(/ class=\".*?\"/gm, "")
-          .replace(/ style=\".*?\"/gm, "");
-        const post = {
-          html,
-          text,
-          categories: [],
-          entities: [],
-          keywords: [],
-          likes: 0,
-          date: new Date(),
-        };
+    for (const postHtml of postsHtml) {
+      const text = postHtml.replace(/(<([^>]+)>)/gi, "");
+      const html = postHtml
+        .replace(/ class=\".*?\"/gm, "")
+        .replace(/ style=\".*?\"/gm, "");
 
-        const result = await client.json.set(
-          new Date().getTime().toString(),
-          ".",
-          post
-        );
-      })
-    );
+      const post = {
+        html,
+        text,
+        categories: [],
+        entities: [],
+        keywords: [],
+        likes: 0,
+        date: new Date(),
+      };
+
+      await client.json.set(new Date().getTime().toString(), ".", post);
+    }
     /* .map(async (item: string) => { */
     /*   const text = item.replace(/(<([^>]+)>)/gi, ""); */
     /*   const html = item */
@@ -69,7 +64,6 @@ export default async function handler(
 
     res.status(200).json({
       status: "success",
-      data: posts,
     });
   } catch (error) {
     console.log(error);
