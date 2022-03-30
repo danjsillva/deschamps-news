@@ -12,16 +12,11 @@ export default async function handler(
 
     await client.connect();
 
-    const result = await client.json.set(
-      "post",
-      ".",
-      req.body.match(/<table(.*?)<\/table>/)
-    );
+    const result = await client.json.set("post", ".", req.body);
 
     const posts = req.body
       .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
-      .match(/<table(.*?)<\/table>/)[0]
-      .match(/<p .*?<\/p>/g)
+      .match(/<p .*?<\/p>/gi)
       .map(async (item: string) => {
         const text = item.replace(/(<([^>]+)>)/gi, "");
         const html = item
