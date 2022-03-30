@@ -12,11 +12,11 @@ export default async function handler(
 
     await client.connect();
 
-    /* const result = await client.json.set("post", ".", req.body); */
-
     const postsHtml = req.body
       .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
       .match(/<p .*?<\/p>/gi);
+
+    const result = await client.json.set("postsHtml", ".", postsHtml);
 
     for (const postHtml of postsHtml) {
       const text = postHtml.replace(/(<([^>]+)>)/gi, "");
