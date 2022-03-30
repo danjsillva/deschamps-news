@@ -39,7 +39,7 @@ export default async function handler(
         return result;
       });
 
-    res.status(201).json(posts);
+    res.status(200).json(posts);
   } catch (error) {
     console.log(error);
 
