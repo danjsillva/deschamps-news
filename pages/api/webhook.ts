@@ -20,8 +20,7 @@ export default async function handler(
         const html = item
           .replace(/ class=\".*?\"/gm, "")
           .replace(/ style=\".*?\"/gm, "");
-
-        await client.json.set(new Date().getTime().toString(), ".", {
+        const post = {
           html,
           text,
           categories: [],
@@ -29,10 +28,18 @@ export default async function handler(
           keywords: [],
           likes: 0,
           date: new Date(),
-        });
+        };
+
+        const result = await client.json.set(
+          new Date().getTime().toString(),
+          ".",
+          post
+        );
+
+        return result;
       });
 
-    res.status(201).json();
+    res.status(201).json(posts);
   } catch (error) {
     console.log(error);
 
