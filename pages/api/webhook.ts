@@ -12,34 +12,41 @@ export default async function handler(
 
     await client.connect();
 
-    const posts = req.body
-      .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
-      .match(/<p .*?<\/p>/g)
-      .map(async (item: string) => {
-        const text = item.replace(/(<([^>]+)>)/gi, "");
-        const html = item
-          .replace(/ class=\".*?\"/gm, "")
-          .replace(/ style=\".*?\"/gm, "");
-        const post = {
-          html,
-          text,
-          categories: [],
-          entities: [],
-          keywords: [],
-          likes: 0,
-          date: new Date(),
-        };
+    const result = await client.json.set("post", ".", req.body);
 
-        const result = await client.json.set(
-          new Date().getTime().toString(),
-          ".",
-          post
-        );
+    /* const posts = req.body */
+    /*   .replace(/<span.*?>&nbsp;<\/span>/gi, " ") */
+    /*   .match(/<p .*?<\/p>/g) */
+    /*   .map(async (item: string) => { */
+    /*     const text = item.replace(/(<([^>]+)>)/gi, ""); */
+    /*     const html = item */
+    /*       .replace(/ class=\".*?\"/gm, "") */
+    /*       .replace(/ style=\".*?\"/gm, ""); */
+    /*     const post = { */
+    /*       html, */
+    /*       text, */
+    /*       categories: [], */
+    /*       entities: [], */
+    /*       keywords: [], */
+    /*       likes: 0, */
+    /*       date: new Date(), */
+    /*     }; */
 
-        return result;
-      });
+    /*     const result = await client.json.set( */
+    /*       new Date().getTime().toString(), */
+    /*       ".", */
+    /*       post */
+    /*     ); */
 
-    res.status(200).json(posts);
+    /*     return result; */
+    /*   }); */
+
+    await client.quit();
+
+    res.status(200).json({
+      status: "success",
+      data: result,
+    });
   } catch (error) {
     console.log(error);
 
