@@ -12,7 +12,11 @@ export default async function handler(
 
     await client.connect();
 
-    const result = await client.json.set("post", ".", req.body);
+    const result = await client.json.set(
+      "post",
+      ".",
+      req.body.match(/<table(.*?)<\/table>/)
+    );
 
     /* const posts = req.body */
     /*   .replace(/<span.*?>&nbsp;<\/span>/gi, " ") */
