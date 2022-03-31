@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
+import dayjs from "dayjs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,8 +12,6 @@ export default async function handler(
     });
 
     await client.connect();
-
-    console.log("Connected to Redis");
 
     const foo = JSON.parse((await client.get("foo")) || "{}");
 
