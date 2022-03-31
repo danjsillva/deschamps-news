@@ -24,10 +24,10 @@ export default async function handler(
       .replace(/<br>/gi, "")
       .match(/<p>.*?<\/p>/gi);
 
-    for (let index in postsHtml) {
+    for (const [index, postHtml] of postsHtml.entries()) {
       const post = {
-        html: postsHtml[index],
-        text: postsHtml[index].replace(/(<([^>]+)>)/gi, ""),
+        html: postHtml,
+        text: postHtml.replace(/(<([^>]+)>)/gi, ""),
         categories: [],
         entities: [],
         keywords: [],
@@ -36,7 +36,9 @@ export default async function handler(
       };
 
       if (post.text) {
-        const key = `${postsDate.format("YYYY-MM-DD")}#${index + 1}`;
+        const key = `${postsDate.format("YYYY-MM-DD")}#${(parseInt(index) + 1)
+          .toString()
+          .padStart(2, "0")}`;
 
         await client.json.set(key, ".", post);
       }
