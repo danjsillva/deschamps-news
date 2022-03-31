@@ -33,7 +33,9 @@ export default async function handler(
         date,
       };
 
-      await client.json.set(new Date().getTime().toString(), ".", post);
+      if (post.text) {
+        await client.json.set(new Date().getTime().toString(), ".", post);
+      }
     }
 
     await client.quit();
