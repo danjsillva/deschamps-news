@@ -18,41 +18,21 @@ interface Post {
 }
 
 const Home: NextPage<Props> = ({ date, posts }) => {
-  return (
-    <main>
-      <section>
-        <div className="date-group">
-          <span className="date-day">{dayjs(date).format("DD")}</span>
-          <div className="date-month-year-group">
-            <span className="date-month">{dayjs(date).format("MMMM")}</span>
-            <span className="date-year">{dayjs(date).format("YYYY")}</span>
-          </div>
-        </div>
-
-        {posts.map((post) => (
-          <article
-            key={post.id}
-            dangerouslySetInnerHTML={{ __html: post.html }}
-            className="post-item"
-          />
-        ))}
-      </section>
-    </main>
-  );
+  return <main></main>;
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch(`${process.env.API_BASE_URL}/posts`);
-  const posts = await response.json();
-  const date = posts[0].date;
+/* export const getStaticProps: GetStaticProps = async () => { */
+/*   const response = await fetch(`${process.env.API_BASE_URL}/posts`); */
+/*   const posts = await response.json(); */
+/*   const date = posts[0].date; */
 
-  return {
-    props: {
-      date,
-      posts,
-    },
-    revalidate: 60 * 60,
-  };
-};
+/*   return { */
+/*     props: { */
+/*       date, */
+/*       posts, */
+/*     }, */
+/*     revalidate: 60 * 60, */
+/*   }; */
+/* }; */
 
 export default Home;
