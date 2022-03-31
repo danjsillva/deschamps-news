@@ -39,7 +39,7 @@ export default async function handler(
         .toString()
         .padStart(2, "0")}`;
 
-      await client.json.set(key, ".", post);
+      await client.json.set(key, ".", { key, ...post });
     }
 
     await client.quit();

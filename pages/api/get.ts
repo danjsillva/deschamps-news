@@ -13,11 +13,21 @@ export default async function handler(
 
     await client.connect();
 
-    const foo = JSON.parse((await client.get("foo")) || "{}");
+    let keys = await client.keys(
+      `${dayjs("2020-12-25").format("YYYY-MM-DD")}*`
+    );
+
+    if (!keys.length) {
+      keys = await client.keys(
+        `${dayjs("2020-12-25").subtract(1, "day").format("YYYY-MM-DD")}*`
+      );
+    }
+
+    const posts = await client.json.mGet(keys, ".");
 
     await client.quit();
 
-    res.status(200).json({ data: foo });
+    res.status(200).json(posts);
   } catch (error) {
     console.error(error);
 
