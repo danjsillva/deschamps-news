@@ -20,7 +20,7 @@ export default async function handler(
       .replace(/ style=\".*?\"/gm, "")
       .replace(/&nbsp;/gi, " ")
       .replace(/<span> <\/span>/gi, " ")
-      /* .replace(/<p><strong><\/strong><\/p>/gi, "") */
+      .replace(/<p><strong><\/strong><\/p>/gi, "")
       .replace(/<br>/gi, "")
       .match(/<p>.*?<\/p>/gi);
 
@@ -35,13 +35,11 @@ export default async function handler(
         date: postsDate.format(),
       };
 
-      if (post.text) {
-        const key = `${postsDate.format("YYYY-MM-DD")}#${(parseInt(index) + 1)
-          .toString()
-          .padStart(2, "0")}`;
+      const key = `${postsDate.format("YYYY-MM-DD")}#${(parseInt(index) + 1)
+        .toString()
+        .padStart(2, "0")}`;
 
-        await client.json.set(key, ".", post);
-      }
+      await client.json.set(key, ".", post);
     }
 
     await client.quit();
