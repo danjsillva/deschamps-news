@@ -19,8 +19,8 @@ export default async function handler(
       .replace(/ style=\".*?\"/gm, "")
       .replace(/&nbsp;/gi, " ")
       .replace(/<span> <\/span>/gi, " ")
-      .replace(/<br>/gi, " ")
-      .match(/<p .*?<\/p>/gi);
+      .replace(/<br>/gi, "")
+      .match(/<p>.*?<\/p>/gi);
 
     for (const postHtml of postsHtml) {
       const post = {
