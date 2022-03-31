@@ -20,7 +20,7 @@ export default async function handler(
       .replace(/ style=\".*?\"/gm, "")
       .replace(/&nbsp;/gi, " ")
       .replace(/<span> <\/span>/gi, " ")
-      .replace(/<p><strong><\/strong><\/p>/gi, "")
+      /* .replace(/<p><strong><\/strong><\/p>/gi, "") */
       .replace(/<br>/gi, "")
       .match(/<p>.*?<\/p>/gi);
 
