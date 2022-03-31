@@ -12,28 +12,20 @@ export default async function handler(
 
     await client.connect();
 
-    await client.json.set("body", ".", req.body);
-
     const date = new Date(req.body.match(/\d{2}.[A-z]*.\d{4}/));
 
-    await client.json.set("date", ".", date);
-
     const postsHtml = req.body
-      /* .replace(/<span.*?>&nbsp;<\/span>/gi, " ") */
+      .replace(/ class=\".*?\"/gm, "")
+      .replace(/ style=\".*?\"/gm, "")
       .replace(/&nbsp;/gi, " ")
+      .replace(/<span> <\/span>/gi, " ")
+      .replace(/<br>/gi, " ")
       .match(/<p .*?<\/p>/gi);
 
-    await client.json.set("postsHtml", ".", postsHtml);
-
     for (const postHtml of postsHtml) {
-      const text = postHtml.replace(/(<([^>]+)>)/gi, "");
-      const html = postHtml
-        .replace(/ class=\".*?\"/gm, "")
-        .replace(/ style=\".*?\"/gm, "");
-
       const post = {
-        html,
-        text,
+        html: postHtml,
+        text: postHtml.replace(/(<([^>]+)>)/gi, ""),
         categories: [],
         entities: [],
         keywords: [],
