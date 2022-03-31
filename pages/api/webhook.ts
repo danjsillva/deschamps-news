@@ -35,13 +35,11 @@ export default async function handler(
         date: postsDate.format(),
       };
 
-      /* if (post.text) { */
-      const key = `${dayjs(postsDate)
-        .format("YYYY-MM-DD")
-        .toString()}#${index}`;
+      if (post.text) {
+        const key = `${postsDate.format("YYYY-MM-DD")}#${index + 1}`;
 
-      await client.json.set(key, ".", post);
-      /* } */
+        await client.json.set(key, ".", post);
+      }
     }
 
     await client.quit();
