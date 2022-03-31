@@ -1,6 +1,21 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, NextPage } from "next";
 
-const Home: NextPage = ({ posts }) => {
+interface Props {
+  posts: Post[];
+}
+
+interface Post {
+  id: string;
+  html: string;
+  text: string;
+  categories: string[];
+  entities: string[];
+  keywords: string[];
+  likes: number;
+  date: string;
+}
+
+const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       <h1>Hello!</h1>
@@ -13,8 +28,8 @@ const Home: NextPage = ({ posts }) => {
   );
 };
 
-export async function getStaticProps() {
-  const response = await fetch("http://localhost:3000/api/get");
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await fetch("https://deschamps-news.vercel.app/api/get");
   const posts = await response.json();
 
   return {
@@ -23,6 +38,6 @@ export async function getStaticProps() {
     },
     revalidate: 60 * 60,
   };
-}
+};
 
 export default Home;
