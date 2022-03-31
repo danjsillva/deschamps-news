@@ -19,11 +19,6 @@ const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       <h1>Hello!</h1>
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.text}</li>
-        ))}
-      </ul>
     </div>
   );
 };
