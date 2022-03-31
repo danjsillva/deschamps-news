@@ -19,9 +19,9 @@ export default async function handler(
       .replace(/ class=\".*?\"/gm, "")
       .replace(/ style=\".*?\"/gm, "")
       .replace(/&nbsp;/gi, " ")
-      .replace(/<span> <\/span>/gi, " ")
-      .replace(/<p><strong><\/strong><\/p>/gi, "")
+      .replace(/<span> <\/span>/gim, " ")
       .replace(/<br>/gi, "")
+      .replace(/<p><strong><\/strong><\/p>/gim, "")
       .match(/<p>.*?<\/p>/gi);
 
     for (const [index, postHtml] of postsHtml.entries()) {
