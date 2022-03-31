@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
+import dayjs from "dayjs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,17 +13,23 @@ export default async function handler(
 
     await client.connect();
 
-    console.log("Connected to Redis");
+    let keys = await client.keys(
+      `${dayjs("2020-12-25").format("YYYY-MM-DD")}*`
+    );
 
-    client.rPush("foo", JSON.stringify({ foo: "bar" }));
+    if (!keys.length) {
+      keys = await client.keys(
+        `${dayjs("2020-12-25").subtract(1, "day").format("YYYY-MM-DD")}*`
+      );
+    }
+
+    const posts = await client.json.mGet(keys, ".");
 
     await client.quit();
 
-    res.status(200).json({
-      message: "Hello World",
-    });
+    res.status(200).json(posts);
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     res.status(500).json({ error });
   }
