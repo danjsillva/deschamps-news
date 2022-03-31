@@ -19,7 +19,8 @@ export default async function handler(
     await client.json.set("date", ".", date);
 
     const postsHtml = req.body
-      .replace(/<span.*?>&nbsp;<\/span>/gi, " ")
+      /* .replace(/<span.*?>&nbsp;<\/span>/gi, " ") */
+      .replace(/&nbsp;/gi, " ")
       .match(/<p .*?<\/p>/gi);
 
     await client.json.set("postsHtml", ".", postsHtml);
