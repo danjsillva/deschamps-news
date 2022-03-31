@@ -6,7 +6,7 @@ const Home: NextPage = ({ posts }) => {
       <h1>Hello!</h1>
       <ul>
         {posts.map((post) => (
-          <li key={post.key}>{post.text}</li>
+          <li key={post.id}>{post.text}</li>
         ))}
       </ul>
     </div>
