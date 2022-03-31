@@ -42,7 +42,7 @@ const Home: NextPage<Props> = ({ date, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch("https://deschamps-news.vercel.app/api/get");
+  const response = await fetch("https://deschamps-news.vercel.app/api/posts");
   const posts = await response.json();
   const date = posts[0].date;
 

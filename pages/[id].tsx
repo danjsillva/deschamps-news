@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
 interface Props {
   post: Post;
@@ -23,9 +23,9 @@ const Post: NextPage<Props> = ({ post }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await fetch(
-    "https://deschamps-news.vercel.app/api/posts/2020-12-24#4"
+    "https://deschamps-news.vercel.app/api/posts/2020-12-24"
   );
   const post = await response.json();
 
