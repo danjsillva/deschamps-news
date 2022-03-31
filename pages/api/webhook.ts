@@ -13,7 +13,7 @@ export default async function handler(
 
     await client.connect();
 
-    const postsDate = dayjs(req.body.match(/\d{2}.[A-z]*.\d{4}/));
+    const postsDate = dayjs(req.body.match(/\d{1,2}.[A-z]*.\d{4}/));
 
     const postsHtml = req.body
       .replace(/ class=\".*?\"/gm, "")
