@@ -14,7 +14,7 @@ export default async function handler(
 
     const { date, id } = req.query;
 
-    let keys = await client.keys(`${date}#${id.toString().padStart(2, "0")}`);
+    let keys = await client.keys(`${date}#${id}`);
 
     if (!keys.length) {
       await client.quit();

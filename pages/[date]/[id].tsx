@@ -8,7 +8,7 @@ interface Props {
 }
 
 interface Post {
-  id: string;
+  id: number;
   html: string;
   text: string;
   categories: string[];

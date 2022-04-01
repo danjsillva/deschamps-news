@@ -30,14 +30,14 @@ export default async function handler(
         text: postHtml.replace(/(<([^>]+)>)/gi, ""),
         categories: [],
         entities: [],
-        keywords: [],
+        concepts: [],
         likes: 0,
         date: postsDate.format(),
       };
 
-      const key = `${postsDate.format("YYYY-MM-DD")}#${(parseInt(index) + 1)
-        .toString()
-        .padStart(2, "0")}`;
+      const key = `${postsDate.format("YYYY-MM-DD")}#${(
+        parseInt(index) + 1
+      ).toString()}`;
 
       await client.json.set(key, ".", { ...post, id: parseInt(index) + 1 });
     }

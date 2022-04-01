@@ -8,7 +8,7 @@ interface Props {
 }
 
 interface Post {
-  id: string;
+  id: number;
   html: string;
   text: string;
   categories: string[];
@@ -72,7 +72,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       date,
-      posts: posts.sort((a, b) => parseInt(a.id) - parseInt(b.id)),
+      posts: posts.sort((a, b) => a.id - b.id),
     },
     revalidate: 60,
   };
