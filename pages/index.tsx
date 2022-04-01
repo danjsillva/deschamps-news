@@ -49,7 +49,7 @@ const Home: NextPage<Props> = ({ postsDate, posts }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const offset = dayjs().utcOffset();
-  const date = dayjs().utcOffset(offset).format("YYYY-MM-DD");
+  const date = dayjs().utc().utcOffset(offset).format("YYYY-MM-DD");
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
   const posts = await response.json();
