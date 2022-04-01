@@ -22,17 +22,19 @@ const Post: NextPage<Props> = ({ date, post }) => {
   return (
     <main>
       <section>
-        <div className="date-group">
-          <span className="date-day">{dayjs(date).utc().format("DD")}</span>
-          <div className="date-month-year-group">
-            <span className="date-month">
-              {dayjs(date).utc().format("MMMM")}
-            </span>
-            <span className="date-year">
-              {dayjs(date).utc().format("YYYY")}
-            </span>
+        <Link href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}`} passHref>
+          <div className="date-group">
+            <span className="date-day">{dayjs(date).utc().format("DD")}</span>
+            <div className="date-month-year-group">
+              <span className="date-month">
+                {dayjs(date).utc().format("MMMM")}
+              </span>
+              <span className="date-year">
+                {dayjs(date).utc().format("YYYY")}
+              </span>
+            </div>
           </div>
-        </div>
+        </Link>
 
         <article
           dangerouslySetInnerHTML={{ __html: post.html }}

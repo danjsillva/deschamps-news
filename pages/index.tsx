@@ -35,11 +35,17 @@ const Home: NextPage<Props> = ({ date, posts }) => {
         </div>
 
         {posts.map((post) => (
-          <article
+          <Link
             key={post.id}
-            dangerouslySetInnerHTML={{ __html: post.html }}
-            className="post-item"
-          />
+            href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}/${post.id}`}
+            passHref
+          >
+            <article
+              key={post.id}
+              dangerouslySetInnerHTML={{ __html: post.html }}
+              className="post-item"
+            />
+          </Link>
         ))}
 
         {!posts.length && (
@@ -61,12 +67,12 @@ export const getStaticProps: GetStaticProps = async () => {
   const date = dayjs().format("YYYY-MM-DD");
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
-  const posts = await response.json();
+  const posts: Post[] = await response.json();
 
   return {
     props: {
       date,
-      posts: [],
+      posts: posts.sort((a, b) => parseInt(a.id) - parseInt(b.id)),
     },
     revalidate: 60,
   };

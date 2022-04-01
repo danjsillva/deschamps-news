@@ -37,7 +37,7 @@ const Posts: NextPage<Props> = ({ date, posts }) => {
         {posts.map((post) => (
           <Link
             key={post.id}
-            href={`/${dayjs(post.date).format("YYYY-MM-DD")}#${post.id}`}
+            href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}/${post.id}`}
             passHref
           >
             <article
@@ -47,6 +47,13 @@ const Posts: NextPage<Props> = ({ date, posts }) => {
             />
           </Link>
         ))}
+
+        {!posts.length && (
+          <p>
+            <strong>Notícia não encontrada.</strong> Veja a newsletter de hoje{" "}
+            <Link href={`/${dayjs().format("YYYY-MM-DD")}`}>aqui</Link>.
+          </p>
+        )}
       </section>
     </main>
   );
@@ -56,12 +63,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { date } = context.query;
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
-  const posts = await response.json();
+  const posts: Post[] = await response.json();
 
   return {
     props: {
       date,
-      posts,
+      posts: posts.sort((a, b) => parseInt(a.id) - parseInt(b.id)),
     },
   };
 };
