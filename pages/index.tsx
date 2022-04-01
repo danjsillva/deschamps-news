@@ -1,8 +1,9 @@
 import type { GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 import dayjs from "dayjs";
 
 interface Props {
-  postsDate: string;
+  date: string;
   posts: Post[];
 }
 
@@ -17,20 +18,18 @@ interface Post {
   date: string;
 }
 
-const Home: NextPage<Props> = ({ postsDate, posts }) => {
+const Home: NextPage<Props> = ({ date, posts }) => {
   return (
     <main>
       <section>
         <div className="date-group">
-          <span className="date-day">
-            {dayjs(postsDate).utc().format("DD")}
-          </span>
+          <span className="date-day">{dayjs(date).utc().format("DD")}</span>
           <div className="date-month-year-group">
             <span className="date-month">
-              {dayjs(postsDate).utc().format("MMMM")}
+              {dayjs(date).utc().format("MMMM")}
             </span>
             <span className="date-year">
-              {dayjs(postsDate).utc().format("YYYY")}
+              {dayjs(date).utc().format("YYYY")}
             </span>
           </div>
         </div>
@@ -42,6 +41,17 @@ const Home: NextPage<Props> = ({ postsDate, posts }) => {
             className="post-item"
           />
         ))}
+
+        {!posts.length && (
+          <p>
+            <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
+            newsletter de ontem{" "}
+            <Link href={`/${dayjs().subtract(1, "day").format("YYYY-MM-DD")}`}>
+              aqui
+            </Link>
+            .
+          </p>
+        )}
       </section>
     </main>
   );
@@ -52,12 +62,11 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
   const posts = await response.json();
-  const postsDate = posts[0].date;
 
   return {
     props: {
-      postsDate,
-      posts,
+      date,
+      posts: [],
     },
     revalidate: 60,
   };

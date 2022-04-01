@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 interface Props {
   date: string;
-  posts: Post[];
+  post: Post;
 }
 
 interface Post {
@@ -18,7 +18,7 @@ interface Post {
   date: string;
 }
 
-const Posts: NextPage<Props> = ({ date, posts }) => {
+const Post: NextPage<Props> = ({ date, post }) => {
   return (
     <main>
       <section>
@@ -34,36 +34,36 @@ const Posts: NextPage<Props> = ({ date, posts }) => {
           </div>
         </div>
 
-        {posts.map((post) => (
-          <Link
-            key={post.id}
-            href={`/${dayjs(post.date).format("YYYY-MM-DD")}#${post.id}`}
-            passHref
-          >
-            <article
-              key={post.id}
-              dangerouslySetInnerHTML={{ __html: post.html }}
-              className="post-item"
-            />
-          </Link>
-        ))}
+        <article
+          dangerouslySetInnerHTML={{ __html: post.html }}
+          className="post-item"
+        />
+
+        {!Object.keys(post).length && (
+          <p>
+            <strong>Notícia não encontrada.</strong> Veja a newsletter de hoje{" "}
+            <Link href={`/${dayjs().format("YYYY-MM-DD")}`}>aqui</Link>.
+          </p>
+        )}
       </section>
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { date } = context.query;
+  const { date, id } = context.query;
 
-  const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
-  const posts = await response.json();
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/posts/${date}/${id}`
+  );
+  const post = await response.json();
 
   return {
     props: {
       date,
-      posts,
+      post,
     },
   };
 };
 
-export default Posts;
+export default Post;

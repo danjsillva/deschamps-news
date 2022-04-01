@@ -39,17 +39,17 @@ export default async function handler(
         .toString()
         .padStart(2, "0")}`;
 
-      await client.json.set(key, ".", { ...post, id: key });
+      await client.json.set(key, ".", { ...post, id: parseInt(index) + 1 });
     }
 
     await client.quit();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
     });
   } catch (error) {
     console.log(error);
 
-    res.status(500).json({ error });
+    return res.status(500).json({ error });
   }
 }
