@@ -22,12 +22,16 @@ const Home: NextPage<Props> = ({ postsDate, posts }) => {
     <main>
       <section>
         <div className="date-group">
-          <span className="date-day">{dayjs(postsDate).format("DD")}</span>
+          <span className="date-day">
+            {dayjs(postsDate).utc().format("DD")}
+          </span>
           <div className="date-month-year-group">
             <span className="date-month">
-              {dayjs(postsDate).format("MMMM")}
+              {dayjs(postsDate).utc().format("MMMM")}
             </span>
-            <span className="date-year">{dayjs(postsDate).format("YYYY")}</span>
+            <span className="date-year">
+              {dayjs(postsDate).utc().format("YYYY")}
+            </span>
           </div>
         </div>
 
