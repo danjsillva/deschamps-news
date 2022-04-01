@@ -32,6 +32,9 @@ section {
   margin-bottom: 64px;
   cursor: pointer;
 }
+.date-group:active {
+  opacity: 75%;
+}
 
 .date-day {
   font-size: 96px;
@@ -59,6 +62,9 @@ section {
 
 .post-item {
   cursor: pointer;
+}
+.post-item:active {
+  opacity: 75%;
 }
 
 p {
