@@ -55,7 +55,7 @@ export const getStaticProps: GetStaticProps = async () => {
       postsDate,
       posts,
     },
-    revalidate: 60 * 60,
+    revalidate: 60,
   };
 };
 
