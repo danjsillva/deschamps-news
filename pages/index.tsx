@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from "next";
 import dayjs from "dayjs";
 
 interface Props {
-  date: string;
+  postsDate: string;
   posts: Post[];
 }
 
@@ -17,15 +17,17 @@ interface Post {
   date: string;
 }
 
-const Home: NextPage<Props> = ({ date, posts }) => {
+const Home: NextPage<Props> = ({ postsDate, posts }) => {
   return (
     <main>
       <section>
         <div className="date-group">
-          <span className="date-day">{dayjs(date).format("DD")}</span>
+          <span className="date-day">{dayjs(postsDate).format("DD")}</span>
           <div className="date-month-year-group">
-            <span className="date-month">{dayjs(date).format("MMMM")}</span>
-            <span className="date-year">{dayjs(date).format("YYYY")}</span>
+            <span className="date-month">
+              {dayjs(postsDate).format("MMMM")}
+            </span>
+            <span className="date-year">{dayjs(postsDate).format("YYYY")}</span>
           </div>
         </div>
 
@@ -42,13 +44,15 @@ const Home: NextPage<Props> = ({ date, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch(`${process.env.API_BASE_URL}/posts`);
+  const date = dayjs().format("YYYY-MM-DD");
+
+  const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
   const posts = await response.json();
-  const date = posts[0].date;
+  const postsDate = posts[0].date;
 
   return {
     props: {
-      date,
+      postsDate,
       posts,
     },
     revalidate: 60 * 60,

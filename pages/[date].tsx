@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import dayjs from "dayjs";
 
 interface Props {
+  postsDate: string;
   posts: Post[];
 }
 
@@ -16,11 +17,29 @@ interface Post {
   date: string;
 }
 
-const Post: NextPage<Props> = ({ posts }) => {
+const Posts: NextPage<Props> = ({ postsDate, posts }) => {
   return (
-    <div>
-      <h1>{posts[0].text}</h1>
-    </div>
+    <main>
+      <section>
+        <div className="date-group">
+          <span className="date-day">{dayjs(postsDate).format("DD")}</span>
+          <div className="date-month-year-group">
+            <span className="date-month">
+              {dayjs(postsDate).format("MMMM")}
+            </span>
+            <span className="date-year">{dayjs(postsDate).format("YYYY")}</span>
+          </div>
+        </div>
+
+        {posts.map((post) => (
+          <article
+            key={post.id}
+            dangerouslySetInnerHTML={{ __html: post.html }}
+            className="post-item"
+          />
+        ))}
+      </section>
+    </main>
   );
 };
 
@@ -29,13 +48,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
   const posts = await response.json();
+  const postsDate = posts[0].date;
 
   return {
     props: {
-      date,
+      postsDate,
       posts,
     },
   };
 };
 
-export default Post;
+export default Posts;

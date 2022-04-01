@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
-import dayjs from "dayjs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,15 +12,9 @@ export default async function handler(
 
     await client.connect();
 
-    let keys = await client.keys(
-      `${dayjs("2020-12-25").format("YYYY-MM-DD")}*`
-    );
+    const { date } = req.query;
 
-    if (!keys.length) {
-      keys = await client.keys(
-        `${dayjs("2020-12-25").subtract(1, "day").format("YYYY-MM-DD")}*`
-      );
-    }
+    let keys = await client.keys(`${date}*`);
 
     const posts = await client.json.mGet(keys, ".");
 
