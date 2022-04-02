@@ -41,14 +41,20 @@ const Home: NextPage<Props> = ({ date, posts }) => {
         ))}
 
         {!posts.length && (
-          <p>
-            <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
-            newsletter de ontem{" "}
-            <Link href={`/${dayjs().subtract(1, "day").format("YYYY-MM-DD")}`}>
-              aqui
-            </Link>
-            .
-          </p>
+          <article className="post">
+            <div>
+              <p>
+                <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
+                newsletter de ontem{" "}
+                <Link
+                  href={`/${dayjs().subtract(1, "day").format("YYYY-MM-DD")}`}
+                >
+                  aqui
+                </Link>
+                .
+              </p>
+            </div>
+          </article>
         )}
       </section>
     </main>

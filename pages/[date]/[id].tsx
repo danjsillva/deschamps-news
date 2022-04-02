@@ -60,28 +60,34 @@ const Post: NextPage<Props> = ({ date, post }) => {
           </div>
         </Link>
 
-        <article
-          dangerouslySetInnerHTML={{ __html: post.html }}
-          className="post"
-        />
+        {!!Object.keys(post).length && (
+          <article className="post">
+            <div dangerouslySetInnerHTML={{ __html: post.html }} />
 
-        <div className="post-actions">
-          <div onClick={handleClickLike} className="post-actions-group">
-            <FiHeart size={24} style={{ marginRight: "8px" }} /> {post.likes}
-          </div>
-          <div>
-            <FiShare size={24} style={{ marginRight: "16px" }} />
-            <FiBookmark size={24} />
-          </div>
-        </div>
+            <div className="post-actions">
+              <div onClick={handleClickLike} className="post-actions-group">
+                <FiHeart size={24} style={{ marginRight: "8px" }} />{" "}
+                {post.likes}
+              </div>
+              <div>
+                <FiShare size={24} style={{ marginRight: "16px" }} />
+                <FiBookmark size={24} />
+              </div>
+            </div>
 
-        {/*<div className="post-item-keywords">Tecnologia e programação</div>*/}
+            {/*<div className="post-item-keywords">Tecnologia e programação</div>*/}
+          </article>
+        )}
 
         {!Object.keys(post).length && (
-          <p>
-            <strong>Notícia não encontrada.</strong> Veja a newsletter de hoje{" "}
-            <Link href={`/${dayjs().format("YYYY-MM-DD")}`}>aqui</Link>.
-          </p>
+          <article className="post">
+            <div>
+              <p>
+                <strong>Notícia não encontrada.</strong> Veja a newsletter de
+                hoje <Link href={`/`}>aqui</Link>.
+              </p>
+            </div>
+          </article>
         )}
       </section>
     </main>

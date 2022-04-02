@@ -41,10 +41,14 @@ const Posts: NextPage<Props> = ({ date, posts }) => {
         ))}
 
         {!posts.length && (
-          <p>
-            <strong>Notícia não encontrada.</strong> Veja a newsletter de hoje{" "}
-            <Link href={`/${dayjs().format("YYYY-MM-DD")}`}>aqui</Link>.
-          </p>
+          <article className="post">
+            <div>
+              <p>
+                <strong>Notícia não encontrada.</strong> Veja a newsletter de
+                hoje <Link href={`/`}>aqui</Link>.
+              </p>
+            </div>
+          </article>
         )}
       </section>
     </main>
