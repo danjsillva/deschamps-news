@@ -1,6 +1,9 @@
+import { useState } from "react";
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import dayjs from "dayjs";
+import { FiBookmark, FiHeart, FiShare } from "react-icons/fi";
 
 interface Props {
   date: string;
@@ -19,6 +22,27 @@ interface Post {
 }
 
 const Post: NextPage<Props> = ({ date, post }) => {
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const refreshData = () => router.replace(router.asPath);
+
+  const handleClickLike = async () => {
+    setLoading(true);
+
+    const response = await fetch(
+      `http://localhost:3000/api/posts/${date}/${post.id}/likes`,
+      {
+        method: "POST",
+      }
+    );
+
+    refreshData();
+
+    setLoading(false);
+  };
+
   return (
     <main>
       <section>
@@ -38,8 +62,20 @@ const Post: NextPage<Props> = ({ date, post }) => {
 
         <article
           dangerouslySetInnerHTML={{ __html: post.html }}
-          className="post-item"
+          className="post"
         />
+
+        <div className="post-actions">
+          <div onClick={handleClickLike} className="post-actions-group">
+            <FiHeart size={24} style={{ marginRight: "8px" }} /> {post.likes}
+          </div>
+          <div>
+            <FiShare size={24} style={{ marginRight: "16px" }} />
+            <FiBookmark size={24} />
+          </div>
+        </div>
+
+        {/*<div className="post-item-keywords">Tecnologia e programação</div>*/}
 
         {!Object.keys(post).length && (
           <p>

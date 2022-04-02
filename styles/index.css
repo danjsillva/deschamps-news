@@ -30,10 +30,6 @@ section {
   flex-direction: row;
   align-self: flex-start;
   margin-bottom: 64px;
-  cursor: pointer;
-}
-.date-group:active {
-  opacity: 75%;
 }
 
 .date-day {
@@ -60,16 +56,40 @@ section {
   line-height: 1;
 }
 
-.post-item {
+.post {
+  border-top: solid 0.025rem #9e9e9e9e;
+  padding: 24px 0;
+}
+
+.post-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #828282;
+  margin-top: 8px;
+}
+
+.post-actions-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
-.post-item:active {
+.post-actions-group:active {
   opacity: 75%;
 }
 
+.post-keywords {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #828282;
+  margin-top: 16px;
+}
+
 p {
-  border-top: solid 0.025rem #9e9e9e9e;
-  padding: 24px 0;
 }
 
 p > strong {

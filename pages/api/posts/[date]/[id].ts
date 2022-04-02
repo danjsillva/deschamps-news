@@ -19,7 +19,7 @@ export default async function handler(
     if (!keys.length) {
       await client.quit();
 
-      return res.status(200).json({});
+      return res.status(404).json({});
     }
 
     const post = await client.json.get(keys[0]);

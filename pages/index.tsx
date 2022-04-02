@@ -35,17 +35,9 @@ const Home: NextPage<Props> = ({ date, posts }) => {
         </div>
 
         {posts.map((post) => (
-          <Link
-            key={post.id}
-            href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}/${post.id}`}
-            passHref
-          >
-            <article
-              key={post.id}
-              dangerouslySetInnerHTML={{ __html: post.html }}
-              className="post-item"
-            />
-          </Link>
+          <article key={post.id} className="post">
+            <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          </article>
         ))}
 
         {!posts.length && (
