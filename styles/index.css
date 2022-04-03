@@ -96,10 +96,13 @@ p > strong {
   font-weight: bold;
 }
 
-p > a {
+a {
   text-decoration: underline;
   color: #0076ff;
   font-weight: bold;
+}
+a:active {
+  opacity: 75%;
 }
 
 p > img {
