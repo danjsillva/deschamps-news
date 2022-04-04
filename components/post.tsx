@@ -35,10 +35,7 @@ export default function Post(props: IProps) {
 
   return (
     <article key={props.post.id} className="post">
-      <div
-        dangerouslySetInnerHTML={{ __html: props.post.html }}
-        style={{ color: "red" }}
-      />
+      <div dangerouslySetInnerHTML={{ __html: props.post.html }} />
 
       {props.post.entities.map((entity) => (
         <span key={entity} className="post-keywords">
