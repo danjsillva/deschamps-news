@@ -67,7 +67,7 @@ section {
   align-items: center;
   justify-content: space-between;
   color: #828282;
-  margin-top: 8px;
+  margin-top: 16px;
 }
 
 .post-actions-group {
@@ -82,11 +82,14 @@ section {
 }
 
 .post-keywords {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  display: inline-block;
   color: #828282;
-  margin-top: 16px;
+  margin: 8px 8px 0 0;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 25px;
+  cursor: pointer;
 }
 
 a {

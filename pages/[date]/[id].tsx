@@ -55,6 +55,12 @@ const Post: NextPage<Props> = ({ date, post }) => {
           <article className="post">
             <div dangerouslySetInnerHTML={{ __html: post.html }} />
 
+            {post.entities.map((entity) => (
+              <span key={entity} className="post-keywords">
+                {entity}
+              </span>
+            ))}
+
             <div className="post-actions">
               <div onClick={handleClickLike} className="post-actions-group">
                 <FiHeart size={24} style={{ marginRight: "8px" }} />{" "}
@@ -65,8 +71,6 @@ const Post: NextPage<Props> = ({ date, post }) => {
                 <FiBookmark size={24} />
               </div>
             </div>
-
-            {/*<div className="post-item-keywords">Tecnologia e programação</div>*/}
           </article>
         )}
 

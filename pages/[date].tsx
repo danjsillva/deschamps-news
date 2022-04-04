@@ -28,6 +28,12 @@ const Posts: NextPage<Props> = ({ date, posts }) => {
         {posts.map((post) => (
           <article key={post.id} className="post">
             <div dangerouslySetInnerHTML={{ __html: post.html }} />
+
+            {post.entities.map((entity) => (
+              <span key={entity} className="post-keywords">
+                {entity}
+              </span>
+            ))}
           </article>
         ))}
 
