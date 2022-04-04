@@ -89,13 +89,6 @@ section {
   margin-top: 16px;
 }
 
-p {
-}
-
-p > strong {
-  font-weight: bold;
-}
-
 a {
   text-decoration: underline;
   color: #0076ff;

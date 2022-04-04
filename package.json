@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "aws-sdk": "^2.1106.0",
     "dayjs": "^1.11.0",
     "dayjs-plugin-utc": "^0.1.2",
     "next": "12.1.1",

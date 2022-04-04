@@ -2,20 +2,11 @@ import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import dayjs from "dayjs";
 
+import { Post } from "../types/index";
+
 interface Props {
   date: string;
   posts: Post[];
-}
-
-interface Post {
-  id: number;
-  html: string;
-  text: string;
-  categories: string[];
-  entities: string[];
-  keywords: string[];
-  likes: number;
-  date: string;
 }
 
 const Posts: NextPage<Props> = ({ date, posts }) => {

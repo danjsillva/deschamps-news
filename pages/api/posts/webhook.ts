@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
 import dayjs from "dayjs";
+import AWS from "aws-sdk";
+
+import { Post, Entity } from "../../../types/index";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,6 +15,14 @@ export default async function handler(
     });
 
     await client.connect();
+
+    AWS.config.update({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: process.env.AWS_REGION,
+    });
+
+    const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" });
 
     const postsDate = dayjs(req.body.match(/\d{1,2}.[A-z]*.\d{4}/));
 
@@ -25,21 +36,34 @@ export default async function handler(
       .match(/<p>.*?<\/p>/gi);
 
     for (const [index, postHtml] of postsHtml.entries()) {
-      const post = {
-        html: postHtml,
-        text: postHtml.replace(/(<([^>]+)>)/gi, ""),
-        categories: [],
-        entities: [],
-        concepts: [],
-        likes: 0,
-        date: postsDate.format(),
-      };
-
       const key = `${postsDate.format("YYYY-MM-DD")}#${(
         parseInt(index) + 1
       ).toString()}`;
 
-      await client.json.set(key, ".", { ...post, id: parseInt(index) + 1 });
+      const text = postHtml.replace(/(<([^>]+)>)/gi, "");
+
+      const comprehendEntities = await comprehend
+        .detectEntities({
+          LanguageCode: "pt",
+          Text: text,
+        })
+        .promise();
+
+      const entities = comprehendEntities.Entities
+        ? comprehendEntities.Entities.map((entity: any) => entity.Text)
+        : [];
+
+      const post = {
+        id: parseInt(index) + 1,
+        html: postHtml,
+        text: text,
+        categories: [],
+        entities: entities,
+        likes: 0,
+        date: postsDate.format(),
+      };
+
+      await client.json.set(key, ".", post);
     }
 
     await client.quit();

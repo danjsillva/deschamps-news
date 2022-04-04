@@ -5,20 +5,11 @@ import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import { FiBookmark, FiHeart, FiShare } from "react-icons/fi";
 
+import { Post } from "../../types/index";
+
 interface Props {
   date: string;
   post: Post;
-}
-
-interface Post {
-  id: number;
-  html: string;
-  text: string;
-  categories: string[];
-  entities: string[];
-  keywords: string[];
-  likes: number;
-  date: string;
 }
 
 const Post: NextPage<Props> = ({ date, post }) => {
