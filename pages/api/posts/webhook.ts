@@ -47,7 +47,7 @@ export default async function handler(
         })
         .promise();
 
-      const entities = comprehendEntities.Entities
+      let entities = comprehendEntities.Entities
         ? comprehendEntities.Entities.filter((entity: any) =>
             [
               "PERSON",
@@ -65,7 +65,7 @@ export default async function handler(
         html: postHtml,
         text: text,
         categories: [],
-        entities: entities,
+        entities: Array.from(new Set(entities)),
         likes: 0,
         date: postsDate.format(),
       };
