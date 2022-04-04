@@ -15,9 +15,9 @@ export default async function handler(
     await client.connect();
 
     AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      region: process.env.AWS_REGION,
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET,
+      region: "us-east-1",
     });
 
     const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" });
