@@ -3,8 +3,6 @@ import { createClient } from "redis";
 import dayjs from "dayjs";
 import AWS from "aws-sdk";
 
-import { Post, Entity } from "../../../types/index";
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
