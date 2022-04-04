@@ -1,40 +1,24 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
-import dayjs from "dayjs";
 
-import { Post } from "../types/index";
+import Date from "../components/date";
+import Post from "../components/post";
+
+import { IPost } from "../types/index";
 
 interface Props {
   date: string;
-  posts: Post[];
+  posts: IPost[];
 }
 
-const Posts: NextPage<Props> = ({ date, posts }) => {
+const PostsPage: NextPage<Props> = ({ date, posts }) => {
   return (
     <main>
-      <section>
-        <div className="date-group">
-          <span className="date-day">{dayjs(date).utc().format("DD")}</span>
-          <div className="date-month-year-group">
-            <span className="date-month">
-              {dayjs(date).utc().format("MMMM")}
-            </span>
-            <span className="date-year">
-              {dayjs(date).utc().format("YYYY")}
-            </span>
-          </div>
-        </div>
+      <section className="container">
+        <Date date={date} />
 
         {posts.map((post) => (
-          <article key={post.id} className="post">
-            <div dangerouslySetInnerHTML={{ __html: post.html }} />
-
-            {post.entities.map((entity) => (
-              <span key={entity} className="post-keywords">
-                {entity}
-              </span>
-            ))}
-          </article>
+          <Post key={post.id} post={post} />
         ))}
 
         {!posts.length && (
@@ -56,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { date } = context.query;
 
   const response = await fetch(`${process.env.API_BASE_URL}/posts/${date}`);
-  const posts: Post[] = await response.json();
+  const posts: IPost[] = await response.json();
 
   return {
     props: {
@@ -66,4 +50,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-export default Posts;
+export default PostsPage;

@@ -19,7 +19,7 @@ main {
   align-items: center;
 }
 
-section {
+.container {
   width: 640px;
   max-width: 90%;
   padding: 96px 0;
