@@ -48,7 +48,16 @@ export default async function handler(
         .promise();
 
       const entities = comprehendEntities.Entities
-        ? comprehendEntities.Entities.map((entity: any) => entity.Text)
+        ? comprehendEntities.Entities.filter((entity: any) =>
+            [
+              "PERSON",
+              "LOCATION",
+              "ORGANIZATION",
+              "COMMERCIAL_ITEM",
+              "EVENT",
+              "TITLE",
+            ].includes(entity.Type)
+          ).map((entity: any) => entity.Text)
         : [];
 
       const post = {
