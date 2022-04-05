@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "redis";
+import { createClient, SchemaFieldTypes } from "redis";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,13 +12,41 @@ export default async function handler(
 
     await client.connect();
 
-    /* const { s } = req.query; */
+    try {
+      await client.ft.create(
+        "index:post",
+        {
+          "$.date": {
+            type: SchemaFieldTypes.TEXT,
+            AS: "date",
+            SORTABLE: true,
+          },
+          "$.id": {
+            type: SchemaFieldTypes.NUMERIC,
+            AS: "id",
+            SORTABLE: true,
+          },
+          "$.text": {
+            type: SchemaFieldTypes.TEXT,
+            AS: "text",
+          },
+        },
+        {
+          ON: "JSON",
+          PREFIX: "post:",
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
+    const { q } = req.query;
+
+    const posts = await client.ft.search("index:post", `@text:${q}*`);
 
     await client.quit();
 
-    return res.status(200).json({
-      status: "success",
-    });
+    return res.status(200).json(posts);
   } catch (error) {
     console.error(error);
 

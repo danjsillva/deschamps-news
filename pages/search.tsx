@@ -7,25 +7,59 @@ import Post from "../components/post";
 import { IPost } from "../types/index";
 
 const SearchPage: NextPage = () => {
+  const router = useRouter();
+
   const [search, setSearch] = useState("");
+  const [count, setCount] = useState(0);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    handleGetPosts(search);
+    const query = router.query.q as string;
+
+    setSearch(query);
+  }, [router.query.q]);
+
+  useEffect(() => {
+    if (search) {
+      handleGetPosts(search);
+    }
   }, [search]);
 
   const handleGetPosts = async (search: string) => {
-    const response = await fetch(
-      `${process.env.API_BASE_URL}/posts/search?s=${search}`
-    );
-    const posts = await response.json();
+    setLoading(true);
 
-    setPosts(posts);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/search?q=${search}`
+    );
+    const { total, documents } = await response.json();
+
+    setCount(total);
+    setPosts(documents.map((document: any) => document.value));
+
+    setLoading(false);
   };
 
   return (
     <main>
-      <section className="container">
+      <section className="search-bar">
+        <section className="search-bar-container">
+          <div className="input-group">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {loading ? (
+              <span className="input-status">Buscando</span>
+            ) : (
+              <span className="input-status">{count} resultado(s)</span>
+            )}
+          </div>
+        </section>
+      </section>
+
+      <section className="container" style={{ marginTop: "32px" }}>
         {posts.map((post) => (
           <Post key={post.id} post={post} />
         ))}

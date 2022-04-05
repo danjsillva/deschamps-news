@@ -17,6 +17,23 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+}
+
+.search-bar {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.search-bar-container {
+  width: 640px;
+  max-width: 90%;
+  padding: 16px 0;
 }
 
 .container {
@@ -90,6 +107,31 @@ main {
   padding: 4px 8px;
   border-radius: 25px;
   cursor: pointer;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  white-space: nowrap;
+  padding: 2px 16px 2px 0;
+}
+
+.input-status {
+  font-size: 14px;
+  color: #828282;
+}
+
+input[type="text"] {
+  display: inline-block;
+  width: 100%;
+  padding: 12px 20px;
+  outline: none;
+  border: none;
+  font-size: inherit;
 }
 
 a {

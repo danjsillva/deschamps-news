@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import dayjs from "dayjs";
 import { FiBookmark, FiHeart, FiShare } from "react-icons/fi";
 
@@ -38,9 +39,9 @@ export default function Post(props: IProps) {
       <div dangerouslySetInnerHTML={{ __html: props.post.html }} />
 
       {props.post.entities.map((entity) => (
-        <span key={entity} className="post-keywords">
-          {entity}
-        </span>
+        <Link href={`/search?q=${entity}`} key={entity} passHref>
+          <span className="post-keywords">{entity}</span>
+        </Link>
       ))}
 
       {/*<div className="post-actions">
