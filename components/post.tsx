@@ -44,16 +44,23 @@ export default function Post(props: IProps) {
         </Link>
       ))}
 
-      {/*<div className="post-actions">
-        <div onClick={handleClickLike} className="post-actions-group">
-          <FiHeart size={24} style={{ marginRight: "8px" }} />{" "}
-          {props.post.likes}
+      {
+        <div className="post-actions">
+          <div onClick={handleClickLike} className="post-actions-group">
+            <FiHeart size={24} style={{ marginRight: "8px" }} />{" "}
+            {props.post.likes}
+          </div>
+
+          <span style={{ fontSize: "14px" }}>
+            {dayjs(props.post.date).utc().format("DD [de] MMMM [de] YYYY")}
+          </span>
+
+          <div>
+            <FiShare size={24} style={{ marginRight: "16px" }} />
+            <FiBookmark size={24} />
+          </div>
         </div>
-        <div>
-          <FiShare size={24} style={{ marginRight: "16px" }} />
-          <FiBookmark size={24} />
-        </div>
-      </div>*/}
+      }
     </article>
   );
 }

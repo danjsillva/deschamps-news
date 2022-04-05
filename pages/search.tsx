@@ -64,12 +64,11 @@ const SearchPage: NextPage = () => {
           <Post key={post.id} post={post} />
         ))}
 
-        {!posts.length && (
+        {!posts.length && !loading && (
           <article className="post">
             <div>
               <p>
-                <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
-                newsletter de ontem.
+                <strong>Nenhuma notícia encontrada.</strong>
               </p>
             </div>
           </article>
