@@ -1,20 +1,48 @@
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import dayjs from "dayjs";
 
-import { Post } from "../types/index";
+import Post from "../components/post";
 
-const Search: NextPage = () => {
-  const router = useRouter();
+import { IPost } from "../types/index";
+
+const SearchPage: NextPage = () => {
+  const [search, setSearch] = useState("");
+  const [posts, setPosts] = useState<IPost[]>([]);
+
+  useEffect(() => {
+    handleGetPosts(search);
+  }, [search]);
+
+  const handleGetPosts = async (search: string) => {
+    const response = await fetch(
+      `${process.env.API_BASE_URL}/posts/search?s=${search}`
+    );
+    const posts = await response.json();
+
+    setPosts(posts);
+  };
 
   return (
     <main>
-      <section>
-        <h1>{JSON.stringify(router.query)}</h1>
+      <section className="container">
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
+
+        {!posts.length && (
+          <article className="post">
+            <div>
+              <p>
+                <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
+                newsletter de ontem.
+              </p>
+            </div>
+          </article>
+        )}
       </section>
     </main>
   );
 };
 
-export default Search;
+export default SearchPage;

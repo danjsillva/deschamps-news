@@ -12,23 +12,13 @@ export default async function handler(
 
     await client.connect();
 
-    const { date, id } = req.query;
-
-    let keys = await client.keys(`post:${date}#${id}`);
-
-    if (!keys.length) {
-      await client.quit();
-
-      return res.status(404).json({});
-    }
-
-    await client.json.numIncrBy(`post:${date}#${id}`, ".likes", 1);
-
-    const post = await client.json.get(`post:${date}#${id}`);
+    /* const { s } = req.query; */
 
     await client.quit();
 
-    return res.status(200).json(post);
+    return res.status(200).json({
+      status: "success",
+    });
   } catch (error) {
     console.error(error);
 

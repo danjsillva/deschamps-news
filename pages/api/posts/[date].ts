@@ -14,7 +14,7 @@ export default async function handler(
 
     const { date } = req.query;
 
-    let keys = await client.keys(`${date}*`);
+    let keys = await client.keys(`post:${date}#*`);
 
     if (!keys.length) {
       await client.quit();

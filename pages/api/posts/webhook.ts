@@ -34,7 +34,7 @@ export default async function handler(
       .match(/<p>.*?<\/p>/gi);
 
     for (const [index, postHtml] of postsHtml.entries()) {
-      const key = `${postsDate.format("YYYY-MM-DD")}#${(
+      const key = `post:${postsDate.format("YYYY-MM-DD")}#${(
         parseInt(index) + 1
       ).toString()}`;
 
