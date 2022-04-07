@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
 import dayjs from "dayjs";
-/* import AWS from "aws-sdk"; */
+import AWS from "aws-sdk";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,13 +14,13 @@ export default async function handler(
 
     await client.connect();
 
-    /* AWS.config.update({ */
-    /*   accessKeyId: process.env.AWS_KEY, */
-    /*   secretAccessKey: process.env.AWS_SECRET, */
-    /*   region: "us-east-1", */
-    /* }); */
+    AWS.config.update({
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET,
+      region: "us-east-1",
+    });
 
-    /* const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" }); */
+    const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" });
 
     const postsDate = dayjs(req.body.match(/\d{1,2}.[A-z]*.\d{4}/));
 
@@ -40,32 +40,32 @@ export default async function handler(
 
       const text = postHtml.replace(/(<([^>]+)>)/gi, "");
 
-      /* const comprehendEntities = await comprehend */
-      /*   .detectEntities({ */
-      /*     LanguageCode: "pt", */
-      /*     Text: text, */
-      /*   }) */
-      /*   .promise(); */
+      const comprehendEntities = await comprehend
+        .detectEntities({
+          LanguageCode: "pt",
+          Text: text,
+        })
+        .promise();
 
-      /* let entities = comprehendEntities.Entities */
-      /*   ? comprehendEntities.Entities.filter((entity: any) => */
-      /*       [ */
-      /*         "PERSON", */
-      /*         "LOCATION", */
-      /*         "ORGANIZATION", */
-      /*         "COMMERCIAL_ITEM", */
-      /*         "EVENT", */
-      /*         "TITLE", */
-      /*       ].includes(entity.Type) */
-      /*     ).map((entity: any) => entity.Text) */
-      /*   : []; */
+      let entities = comprehendEntities.Entities
+        ? comprehendEntities.Entities.filter((entity: any) =>
+            [
+              "PERSON",
+              "LOCATION",
+              "ORGANIZATION",
+              "COMMERCIAL_ITEM",
+              "EVENT",
+              "TITLE",
+            ].includes(entity.Type)
+          ).map((entity: any) => entity.Text)
+        : [];
 
       const post = {
         id: parseInt(index) + 1,
         html: postHtml,
         text: text,
-        /* categories: [], */
-        /* entities: Array.from(new Set(entities)), */
+        categories: [],
+        entities: Array.from(new Set(entities)),
         likes: 0,
         date: postsDate.format(),
       };
