@@ -1,4 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 
@@ -15,6 +16,11 @@ interface Props {
 const PostPage: NextPage<Props> = ({ date, post }) => {
   return (
     <main>
+      <Head>
+        <title>Deschamps News - {post.text}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <section className="container">
         <Link href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}`} passHref>
           <Date date={date} />

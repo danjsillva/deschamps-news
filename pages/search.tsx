@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import Post from "../components/post";
@@ -42,6 +43,11 @@ const SearchPage: NextPage = () => {
 
   return (
     <main>
+      <Head>
+        <title>Deschamps News - {search || "Busca"}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <section className="search-bar">
         <section className="search-bar-container">
           <div className="input-group">

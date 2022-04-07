@@ -1,5 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
+import dayjs from "dayjs";
 
 import Date from "../components/date";
 import Post from "../components/post";
@@ -14,6 +16,13 @@ interface Props {
 const PostsPage: NextPage<Props> = ({ date, posts }) => {
   return (
     <main>
+      <Head>
+        <title>
+          Deschamps News - {dayjs(date).utc().format("DD [de] MMM [de] YYYY")}
+        </title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <section className="container">
         <Date date={date} />
 

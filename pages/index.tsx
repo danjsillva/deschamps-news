@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 
@@ -15,6 +16,11 @@ interface IProps {
 const HomePage: NextPage<IProps> = ({ date, posts }) => {
   return (
     <main>
+      <Head>
+        <title>Deschamps News - Home</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <section className="container">
         <Date date={date} />
 
