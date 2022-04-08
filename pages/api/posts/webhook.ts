@@ -22,55 +22,61 @@ export default async function handler(
 
     const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" });
 
-    const postsDate = dayjs(req.body.match(/\d{1,2}.[A-z]*.\d{4}/));
+    const html = req.body;
 
-    const postsHtml = req.body
-      .replace(/ class=\".*?\"/gm, "")
-      .replace(/ style=\".*?\"/gm, "")
-      .replace(/&nbsp;/gi, " ")
-      .replace(/<span> <\/span>/gim, " ")
-      .replace(/<br>/gi, "")
-      .replace(/<p><strong><\/strong><\/p>/gim, "")
-      .match(/<p>.*?<\/p>/gi);
+    const postsBatches = html.match(/<blockquote.*?<\/blockquote>/gs);
 
-    for (const [index, postHtml] of postsHtml.entries()) {
-      const key = `post:${postsDate.format("YYYY-MM-DD")}#${(
-        parseInt(index) + 1
-      ).toString()}`;
+    for (const postsBatch of postsBatches) {
+      const postsDate = dayjs(postsBatch.match(/\d{1,2}.[A-z]*.\d{4}/));
 
-      const text = postHtml.replace(/(<([^>]+)>)/gi, "");
+      const postsHtml = postsBatch
+        .replace(/ class=\".*?\"/gm, "")
+        .replace(/ style=\".*?\"/gm, "")
+        .replace(/&nbsp;/gi, " ")
+        .replace(/<span> <\/span>/gim, " ")
+        .replace(/<br>/gi, "")
+        .replace(/<p><strong><\/strong><\/p>/gim, "")
+        .match(/<p>.*?<\/p>/gs);
 
-      const comprehendEntities = await comprehend
-        .detectEntities({
-          LanguageCode: "pt",
-          Text: text,
-        })
-        .promise();
+      for (const [index, postHtml] of postsHtml.entries()) {
+        const key = `post:${postsDate.format("YYYY-MM-DD")}#${(
+          parseInt(index) + 1
+        ).toString()}`;
 
-      let entities = comprehendEntities.Entities
-        ? comprehendEntities.Entities.filter((entity: any) =>
-            [
-              "PERSON",
-              "LOCATION",
-              "ORGANIZATION",
-              "COMMERCIAL_ITEM",
-              "EVENT",
-              "TITLE",
-            ].includes(entity.Type)
-          ).map((entity: any) => entity.Text)
-        : [];
+        const text = postHtml.replace(/(<([^>]+)>)/gi, "");
 
-      const post = {
-        id: parseInt(index) + 1,
-        html: postHtml,
-        text: text,
-        categories: [],
-        entities: Array.from(new Set(entities)),
-        likes: 0,
-        date: postsDate.format(),
-      };
+        const comprehendEntities = await comprehend
+          .detectEntities({
+            LanguageCode: "pt",
+            Text: text,
+          })
+          .promise();
 
-      await client.json.set(key, ".", post);
+        let entities = comprehendEntities.Entities
+          ? comprehendEntities.Entities.filter((entity: any) =>
+              [
+                "PERSON",
+                "LOCATION",
+                "ORGANIZATION",
+                "COMMERCIAL_ITEM",
+                "EVENT",
+                "TITLE",
+              ].includes(entity.Type)
+            ).map((entity: any) => entity.Text)
+          : [];
+
+        const post = {
+          id: parseInt(index) + 1,
+          html: postHtml,
+          text: text,
+          categories: [],
+          entities: Array.from(new Set(entities)),
+          likes: 0,
+          date: postsDate.format(),
+        };
+
+        await client.json.set(key, ".", post);
+      }
     }
 
     await client.quit();
