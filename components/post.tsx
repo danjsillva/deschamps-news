@@ -68,7 +68,7 @@ export default function Post(props: IProps) {
                 toast("Link copiado para a sua área de transferência!");
               }}
               size={24}
-              style={{ marginRight: "16px", cursor: "pointer" }}
+              style={{ cursor: "pointer" }}
             />
           </div>
         </div>
