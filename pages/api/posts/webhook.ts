@@ -35,9 +35,10 @@ export default async function handler(
     const postsBatches = html.match(/<blockquote.*?<\/blockquote>/gs);
 
     for (const postsBatch of postsBatches) {
-      console.log(postsBatch);
-
       const postsDate = dayjs(postsBatch.match(/\d{1,2}.[A-z]*.\d{4}/));
+
+      console.log(postsBatch);
+      console.log(postsDate);
 
       const postsHtml = postsBatch
         .replace(/ class=\".*?\"/gm, "")
