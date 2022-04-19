@@ -37,9 +37,6 @@ export default async function handler(
     for (const postsBatch of postsBatches) {
       const postsDate = dayjs(postsBatch.match(/\d{1,2}.[A-z]*.\d{4}/));
 
-      console.log(postsBatch);
-      console.log(postsDate);
-
       const postsHtml = postsBatch
         .replace(/ class=\".*?\"/gm, "")
         .replace(/ style=\".*?\"/gm, "")
