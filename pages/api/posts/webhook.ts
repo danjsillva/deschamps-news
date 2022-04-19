@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "redis";
-import dayjs from "dayjs";
 import AWS from "aws-sdk";
+import Twitter from "twitter-v2";
+import dayjs from "dayjs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,6 +22,13 @@ export default async function handler(
     });
 
     const comprehend = new AWS.Comprehend({ apiVersion: "2017-11-27" });
+
+    const twitterClient = new Twitter({
+      consumer_key: process.env.TWITTER_CONSUMER_KEY!,
+      consumer_secret: process.env.TWITTER_CONSUMER_SECRET!,
+      access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY!,
+      access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
+    });
 
     const html = req.body;
 
@@ -76,6 +84,29 @@ export default async function handler(
         };
 
         await client.json.set(key, ".", post);
+
+        let twitterText = `${
+          process.env.NEXT_PUBLIC_APP_BASE_URL
+        }/${postsDate.format("YYYY-MM-DD")}/${post.id}`;
+
+        twitterText = `${post.entities
+          .map((entity) => `#${entity}`)
+          .join(" ")} ${twitterText}`;
+
+        if (twitterText.length < 248) {
+          twitterText = `${post.text.substring(
+            0,
+            280 - twitterText.length - 4
+          )}... ${twitterText}`;
+
+          console.log(twitterText.length, twitterText);
+
+          const { data } = await twitterClient.post("tweets", {
+            text: `${twitterText}`,
+          });
+
+          console.log(data);
+        }
       }
     }
 
