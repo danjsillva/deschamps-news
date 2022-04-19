@@ -85,28 +85,28 @@ export default async function handler(
 
         await client.json.set(key, ".", post);
 
-        let twitterText = `${
-          process.env.NEXT_PUBLIC_APP_BASE_URL
-        }/${postsDate.format("YYYY-MM-DD")}/${post.id}`;
+        /* let twitterText = `${ */
+        /*   process.env.NEXT_PUBLIC_APP_BASE_URL */
+        /* }/${postsDate.format("YYYY-MM-DD")}/${post.id}`; */
 
-        twitterText = `${post.entities
-          .map((entity) => `#${entity}`)
-          .join(" ")} ${twitterText}`;
+        /* twitterText = `${post.entities */
+        /*   .map((entity) => `#${entity}`) */
+        /*   .join(" ")} ${twitterText}`; */
 
-        if (twitterText.length < 248) {
-          twitterText = `${post.text.substring(
-            0,
-            280 - twitterText.length - 4
-          )}... ${twitterText}`;
+        /* if (twitterText.length < 248) { */
+        /*   twitterText = `${post.text.substring( */
+        /*     0, */
+        /*     280 - twitterText.length - 4 */
+        /*   )}... ${twitterText}`; */
 
-          console.log(twitterText.length, twitterText);
+        /*   console.log(twitterText.length, twitterText); */
 
-          const { data } = await twitterClient.post("tweets", {
-            text: `${twitterText}`,
-          });
+        /*   const { data } = await twitterClient.post("tweets", { */
+        /*     text: `${twitterText}`, */
+        /*   }); */
 
-          console.log(data);
-        }
+        /*   console.log(data); */
+        /* } */
       }
     }
 
