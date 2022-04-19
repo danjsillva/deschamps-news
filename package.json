@@ -19,7 +19,7 @@
     "react-icons": "^4.3.1",
     "react-toastify": "^8.2.0",
     "redis": "^4.0.4",
-    "twitter-v2": "^1.1.0"
+    "twitter-api-v2": "^1.12.0"
   },
   "devDependencies": {
     "@types/node": "17.0.23",
