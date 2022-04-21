@@ -9,10 +9,12 @@ const getDate = (html: string) => {
     return dayjs(dates[0], "DD MMM YYYY").locale("en").format("YYYY-MM-DD");
   }
 
-  dates = html.match(/[A-z]{1,} \d{1,2}th, \d{4}/g) || [];
+  dates = html.match(/[A-z]{1,} \d{1,2}(st|th), \d{4}/g) || [];
 
   if (dates.length) {
-    return dayjs(dates[0].replace("th", "")).format("YYYY-MM-DD");
+    return dayjs(dates[0].replace("st,", "").replace("th,", "")).format(
+      "YYYY-MM-DD"
+    );
   }
 
   return null;
