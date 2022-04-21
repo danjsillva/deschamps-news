@@ -23,14 +23,16 @@ const getBatches = (html: string) => {
 };
 
 const getParagraphs = (html: string) => {
-  return html
-    .replace(/ class=\".*?\"/gm, "")
-    .replace(/ style=\".*?\"/gm, "")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/<span> <\/span>/gim, " ")
-    .replace(/<br>/gi, "")
-    .replace(/<p><strong><\/strong><\/p>/gim, "")
-    .match(/<p>.*?<\/p>/gs);
+  return (
+    html
+      .replace(/ class=\".*?\"/gm, "")
+      .replace(/ style=\".*?\"/gm, "")
+      .replace(/&nbsp;/gi, " ")
+      .replace(/<span> <\/span>/gim, " ")
+      .replace(/<br>/gi, "")
+      .replace(/<p><strong><\/strong><\/p>/gim, "")
+      .match(/<p>.*?<\/p>/gs) || []
+  );
 };
 
 const getText = (html: string) => {

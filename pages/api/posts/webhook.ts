@@ -14,16 +14,15 @@ export default async function handler(
     await RedisHelper.connect();
 
     const date = dayjs(HTMLHelper.getDate(req.body));
+    const paragraphs = HTMLHelper.getParagraphs(req.body);
 
-    if (date) {
-      const paragraphs = HTMLHelper.getParagraphs(req.body);
-
+    if (date && paragraphs.length) {
       for (const [index, paragraph] of paragraphs.entries()) {
         const text = HTMLHelper.getText(paragraph);
         const entities = await AWSHelper.getEntities(text);
 
         const post = {
-          id: parseInt(index) + 1,
+          id: index + 1,
           html: paragraph,
           text: text,
           categories: [],
@@ -33,7 +32,6 @@ export default async function handler(
         };
 
         await RedisHelper.save(post);
-
         await TwitterHelper.tweet(post);
       }
     }
