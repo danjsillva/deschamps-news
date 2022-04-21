@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import utc from "dayjs/plugin/utc";
 
 import "dayjs/locale/pt-br";
@@ -8,6 +9,7 @@ import "dayjs/locale/pt-br";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/index.css";
 
+dayjs.extend(customParseFormat);
 dayjs.extend(utc);
 dayjs.locale("pt-br");
 
