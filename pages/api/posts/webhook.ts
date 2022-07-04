@@ -11,6 +11,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    console.log(req.body);
+
     await RedisHelper.connect();
 
     const date = dayjs(HTMLHelper.getDate(req.body));
