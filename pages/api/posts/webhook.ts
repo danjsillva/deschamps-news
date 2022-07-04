@@ -11,7 +11,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.body);
+    throw new Error("Invalid date or paragraphs");
 
     /* await RedisHelper.connect(); */
 
@@ -46,6 +46,7 @@ export default async function handler(
       status: "success",
     });
   } catch (error) {
+    console.log(req.body);
     console.error(error);
 
     return res.status(500).json({ error });
