@@ -42,9 +42,9 @@ export default async function handler(
 
     /* await RedisHelper.close(); */
 
-    /* return res.status(200).json({ */
-    /*   status: "success", */
-    /* }); */
+    return res.status(200).json({
+      status: "success",
+    });
   } catch (error) {
     console.error(error);
 
