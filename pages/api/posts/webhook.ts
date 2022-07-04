@@ -13,8 +13,10 @@ export default async function handler(
   try {
     await RedisHelper.connect();
 
-    const date = dayjs(HTMLHelper.getDate(req.body));
-    const paragraphs = HTMLHelper.getParagraphs(req.body);
+    const { html } = req.body;
+
+    const date = dayjs(HTMLHelper.getDate(html));
+    const paragraphs = HTMLHelper.getParagraphs(html);
 
     if (!date.isValid() || !paragraphs.length) {
       throw new Error("Invalid date or paragraphs");
@@ -44,7 +46,6 @@ export default async function handler(
       status: "success",
     });
   } catch (error) {
-    console.log(req.body);
     console.error(error);
 
     return res.status(500).json({ error });
