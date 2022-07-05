@@ -5,16 +5,20 @@ const getDate = (html: string) => {
 
   dates = html.match(/\d{1,2} [A-z]{1,} \d{4}/g) || [];
 
+  console.log(dates);
+
   if (dates.length) {
-    return dayjs(dates[0], "DD MMM YYYY").locale("en").format("YYYY-MM-DD");
+    return dayjs(dates[0], "D MMMM YYYY", "en").format("YYYY-MM-DD");
   }
 
-  dates = html.match(/[A-z]{1,} \d{1,2}(st|th), \d{4}/g) || [];
+  dates = html.match(/[A-z]{1,} \d{1,2}(st|nd|th), \d{4}/g) || [];
+
+  console.log(dates);
 
   if (dates.length) {
-    return dayjs(dates[0].replace("st,", "").replace("th,", "")).format(
-      "YYYY-MM-DD"
-    );
+    return dayjs(
+      dates[0].replace("st,", "").replace("nd,", "").replace("th,", "")
+    ).format("YYYY-MM-DD");
   }
 
   return null;
