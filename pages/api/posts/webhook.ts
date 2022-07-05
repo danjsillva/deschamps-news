@@ -15,6 +15,7 @@ export default async function handler(
 
     const { html } = req.body;
 
+    console.log(req.body);
     console.log(html);
 
     const date = dayjs(HTMLHelper.getDate(html));
