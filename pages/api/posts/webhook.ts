@@ -13,12 +13,14 @@ export default async function handler(
   try {
     await RedisHelper.connect();
 
-    const { html } = req.body;
+    const { sentDateInGMT, html } = req.body;
 
     console.log(req.body);
+    console.log(sentDateInGMT);
     console.log(html);
 
-    const date = dayjs(HTMLHelper.getDate(html));
+    // const date = dayjs(HTMLHelper.getDate(html));
+    const date = dayjs(sentDateInGMT);
 
     if (!date.isValid()) {
       throw new Error("Invalid date");
