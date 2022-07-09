@@ -15,6 +15,7 @@ export default async function handler(
       .find({
         text: { $regex: query, $options: "i" },
       })
+      .sort({ likes: -1 })
       .toArray();
 
     return res.status(200).json(posts);

@@ -67,7 +67,7 @@ const SearchPage: NextPage = () => {
 
       <section className="container" style={{ marginTop: "32px" }}>
         {posts.map((post) => (
-          <Post key={post.date} post={post} />
+          <Post key={post._id} post={post} />
         ))}
 
         {!posts.length && !loading && (

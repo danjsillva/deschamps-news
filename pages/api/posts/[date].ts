@@ -23,6 +23,7 @@ export default async function handler(
           $lte: dayjs(String(date)).endOf("day").toDate(),
         },
       })
+      .sort({ number: 1 })
       .toArray();
 
     return res.status(200).json(posts);

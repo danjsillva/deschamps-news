@@ -27,7 +27,7 @@ const PostsPage: NextPage<IProps> = ({ date, posts }) => {
         <Date date={date} />
 
         {posts.map((post) => (
-          <Post key={post.number} post={post} />
+          <Post key={post._id} post={post} />
         ))}
 
         {!posts.length && (
@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       date,
-      posts: posts.sort((a, b) => a.number - b.number),
+      posts,
     },
   };
 };
