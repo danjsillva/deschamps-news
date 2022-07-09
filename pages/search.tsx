@@ -33,10 +33,10 @@ const SearchPage: NextPage = () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/search?q=${search}`
     );
-    const { total, documents } = await response.json();
+    const documents = await response.json();
 
-    setCount(total);
-    setPosts(documents.map((document: any) => document.value));
+    setCount(documents.length);
+    setPosts(documents);
 
     setLoading(false);
   };

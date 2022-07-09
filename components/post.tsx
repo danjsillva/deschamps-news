@@ -21,7 +21,7 @@ export default function Post(props: IProps) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/${dayjs(props.post.date)
         .utc()
-        .format("YYYY-MM-DD")}/${props.post.id}/likes`,
+        .format("YYYY-MM-DD")}/${props.post.number}/likes`,
       {
         method: "POST",
       }
@@ -31,7 +31,7 @@ export default function Post(props: IProps) {
   };
 
   return (
-    <article key={props.post.id} className="post">
+    <article key={props.post.number} className="post">
       {(props.post.html.toLowerCase().includes("link patrocinado") ||
         props.post.html.toLowerCase().includes("link afiliado")) && (
         <span className="post-tag">Patrocinado</span>
@@ -63,7 +63,7 @@ export default function Post(props: IProps) {
                     props.post.date
                   )
                     .utc()
-                    .format("YYYY-MM-DD")}/${props.post.id}`
+                    .format("YYYY-MM-DD")}/${props.post.number}`
                 );
                 toast("Link copiado para a sua área de transferência!");
               }}

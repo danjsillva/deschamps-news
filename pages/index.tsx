@@ -25,7 +25,7 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
         <Date date={date} />
 
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.number} post={post} />
         ))}
 
         {!posts.length && (
@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       date,
-      posts: posts.sort((a, b) => a.id - b.id),
+      posts: posts.sort((a, b) => a.number - b.number),
     },
     revalidate: 60,
   };

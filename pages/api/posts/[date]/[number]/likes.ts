@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dayjs from "dayjs";
 
-import MongoDBHelper from "../../../helpers/mongodb";
+import MongoDBHelper from "../../../../../helpers/mongodb";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,23 +9,20 @@ export default async function handler(
 ) {
   try {
     const db = await MongoDBHelper.connect();
-    const { date } = req.query;
+    const { date, number } = req.query;
 
-    if (!dayjs(date).isValid()) {
-      throw new Error("Invalid date");
-    }
-
-    const posts = await db
-      ?.collection("posts")
-      .find({
+    const post = await db?.collection("posts").findOneAndUpdate(
+      {
         date: {
           $gte: dayjs(date).startOf("day").toDate(),
           $lte: dayjs(date).endOf("day").toDate(),
         },
-      })
-      .toArray();
+        number: Number(number),
+      },
+      { $inc: { likes: 1 } }
+    );
 
-    return res.status(200).json(posts);
+    return res.status(200).json(post);
   } catch (error) {
     console.error(error);
 

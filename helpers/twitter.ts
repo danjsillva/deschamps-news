@@ -16,7 +16,7 @@ const tweet = async (post: any) => {
     ) {
       let message = `${process.env.NEXT_PUBLIC_APP_BASE_URL}/${dayjs(
         post.date
-      ).format("YYYY-MM-DD")}/${post.id}`;
+      ).format("YYYY-MM-DD")}/${post.number}`;
 
       message = `${post.entities
         .map((entity: string) => `#${entity.replace(/\s/g, "")}`)

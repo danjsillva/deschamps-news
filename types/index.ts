@@ -1,5 +1,5 @@
 export interface IPost {
-  id: number;
+  number: number;
   html: string;
   text: string;
   categories: string[];

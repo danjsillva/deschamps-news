@@ -8,12 +8,12 @@ import Post from "../components/post";
 
 import { IPost } from "../types/index";
 
-interface Props {
+interface IProps {
   date: string;
   posts: IPost[];
 }
 
-const PostsPage: NextPage<Props> = ({ date, posts }) => {
+const PostsPage: NextPage<IProps> = ({ date, posts }) => {
   return (
     <main>
       <Head>
@@ -27,7 +27,7 @@ const PostsPage: NextPage<Props> = ({ date, posts }) => {
         <Date date={date} />
 
         {posts.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.number} post={post} />
         ))}
 
         {!posts.length && (
@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       date,
-      posts: posts.sort((a, b) => a.id - b.id),
+      posts: posts.sort((a, b) => a.number - b.number),
     },
   };
 };

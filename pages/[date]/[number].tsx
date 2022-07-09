@@ -44,10 +44,10 @@ const PostPage: NextPage<Props> = ({ date, post }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { date, id } = context.query;
+  const { date, number } = context.query;
 
   const response = await fetch(
-    `${process.env.API_BASE_URL}/posts/${date}/${id}`
+    `${process.env.API_BASE_URL}/posts/${date}/${number}`
   );
   const post: IPost = await response.json();
 
