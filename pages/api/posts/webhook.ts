@@ -5,7 +5,7 @@ import { decode } from "html-entities";
 import MongoDBHelper from "../../../helpers/mongodb";
 import HTMLHelper from "../../../helpers/html";
 import AWSHelper from "../../../helpers/aws";
-import TwitterHelper from "../../../helpers/twitter";
+// import TwitterHelper from "../../../helpers/twitter";
 
 export default async function handler(
   req: NextApiRequest,

@@ -14,8 +14,8 @@ export default async function handler(
     const post = await db?.collection("posts").findOneAndUpdate(
       {
         date: {
-          $gte: dayjs(date).startOf("day").toDate(),
-          $lte: dayjs(date).endOf("day").toDate(),
+          $gte: dayjs(String(date)).startOf("day").toDate(),
+          $lte: dayjs(String(date)).endOf("day").toDate(),
         },
         number: Number(number),
       },

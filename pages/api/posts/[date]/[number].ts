@@ -11,7 +11,7 @@ export default async function handler(
     const db = await MongoDBHelper.connect();
     const { date, number } = req.query;
 
-    if (!dayjs(date).isValid()) {
+    if (!dayjs(String(date)).isValid()) {
       throw new Error("Invalid date");
     }
 
@@ -21,8 +21,8 @@ export default async function handler(
 
     const post = await db?.collection("posts").findOne({
       date: {
-        $gte: dayjs(date).startOf("day").toDate(),
-        $lte: dayjs(date).endOf("day").toDate(),
+        $gte: dayjs(String(date)).startOf("day").toDate(),
+        $lte: dayjs(String(date)).endOf("day").toDate(),
       },
       number: Number(number),
     });
