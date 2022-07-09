@@ -31,7 +31,7 @@ export default function Post(props: IProps) {
   };
 
   return (
-    <article key={props.post.number} className="post">
+    <article className="post">
       {(props.post.html.toLowerCase().includes("link patrocinado") ||
         props.post.html.toLowerCase().includes("link afiliado")) && (
         <span className="post-tag">Patrocinado</span>
