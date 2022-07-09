@@ -1,9 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dayjs from "dayjs";
+import { decode } from "html-entities";
 
+import MongoDBHelper from "../../../helpers/mongodb";
 import HTMLHelper from "../../../helpers/html";
 import AWSHelper from "../../../helpers/aws";
-import RedisHelper from "../../../helpers/redis";
 import TwitterHelper from "../../../helpers/twitter";
 
 export default async function handler(
@@ -11,15 +12,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    await RedisHelper.connect();
-
+    const db = await MongoDBHelper.connect();
     const { sentDateInGMT, html } = req.body;
-
-    console.log(req.body);
-    console.log(sentDateInGMT);
-    console.log(html);
-
-    // const date = dayjs(HTMLHelper.getDate(html));
     const date = dayjs(sentDateInGMT);
 
     if (!date.isValid()) {
@@ -33,24 +27,23 @@ export default async function handler(
     }
 
     for (const [index, paragraph] of paragraphs.entries()) {
-      const text = HTMLHelper.getText(paragraph);
+      const html = decode(paragraph);
+      const text = HTMLHelper.getText(html);
       const entities = await AWSHelper.getEntities(text);
 
       const post = {
-        id: index + 1,
-        html: paragraph,
+        number: index + 1,
+        html: html,
         text: text,
         categories: [],
         entities: Array.from(new Set(entities)),
         likes: 0,
-        date: date.format(),
+        date: new Date(date.toDate().setHours(0, 0, 0, 0)),
       };
 
-      await RedisHelper.save(post);
-      await TwitterHelper.tweet(post);
+      await db?.collection("posts").insertOne(post);
+      // await TwitterHelper.tweet(post);
     }
-
-    await RedisHelper.close();
 
     return res.status(200).json({
       status: "success",
