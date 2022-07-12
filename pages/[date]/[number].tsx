@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import Date from "../../components/date";
+import Sidebar from "../../components/sidebar";
 import Post from "../../components/post";
 
 import { IPost } from "../../types/index";
@@ -21,19 +21,16 @@ const PostPage: NextPage<Props> = ({ date, post }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="container">
-        <Link href={`/${dayjs(post.date).utc().format("YYYY-MM-DD")}`} passHref>
-          <Date date={date} />
-        </Link>
+      <Sidebar date={date} />
 
+      <section className="container">
         {!!Object.keys(post).length && <Post post={post} />}
 
         {!Object.keys(post).length && (
           <article className="post">
             <div>
               <p>
-                <strong>Notícia não encontrada.</strong> Veja a newsletter de
-                hoje <Link href={`/`}>aqui</Link>.
+                <strong>Notícia não encontrada.</strong>
               </p>
             </div>
           </article>
