@@ -1,7 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import dayjs from "dayjs";
 
 import Sidebar from "../../components/sidebar";
 import Post from "../../components/post";
@@ -17,16 +15,19 @@ const PostPage: NextPage<Props> = ({ date, post }) => {
   return (
     <main>
       <Head>
-        <title>Deschamps News - {post.text}</title>
+        <title>
+          Deschamps News -{" "}
+          {post?.text.substring(0, 64) ?? "Notícia não encontrada"}
+        </title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Sidebar date={date} />
 
       <section className="container">
-        {!!Object.keys(post).length && <Post post={post} />}
+        {!!post && <Post post={post} />}
 
-        {!Object.keys(post).length && (
+        {!post && (
           <article className="post">
             <div>
               <p>
