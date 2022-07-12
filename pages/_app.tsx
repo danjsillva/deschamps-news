@@ -7,6 +7,7 @@ import isToday from "dayjs/plugin/isToday";
 import isTomorrow from "dayjs/plugin/isTomorrow";
 import isYesterday from "dayjs/plugin/isYesterday";
 import weekday from "dayjs/plugin/weekday";
+// @ts-ignore
 import dayjsBusinessDays from "dayjs-business-days";
 
 import "dayjs/locale/pt-br";
