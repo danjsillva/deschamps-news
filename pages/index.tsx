@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import Date from "../components/date";
+import Sidebar from "../components/sidebar";
 import Post from "../components/post";
 
 import { IPost } from "../types/index";
@@ -21,9 +21,9 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="container">
-        <Date date={date} />
+      <Sidebar date={date} />
 
+      <section className="container">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
@@ -33,9 +33,9 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
             <div>
               <p>
                 <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
-                newsletter de ontem{" "}
+                última newsletter{" "}
                 <Link
-                  href={`/${dayjs().subtract(1, "day").format("YYYY-MM-DD")}`}
+                  href={`/${dayjs().prevBusinessDay().format("YYYY-MM-DD")}`}
                 >
                   aqui
                 </Link>

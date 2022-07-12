@@ -7,15 +7,10 @@ interface IProps {
 export default function Date(props: IProps) {
   return (
     <section className="date-group">
-      <span className="date-day">{dayjs(props.date).utc().format("DD")}</span>
-      <div className="date-month-year-group">
-        <span className="date-month">
-          {dayjs(props.date).utc().format("MMMM")}
-        </span>
-        <span className="date-year">
-          {dayjs(props.date).utc().format("YYYY")}
-        </span>
+      <div className="date-month-year">
+        {dayjs(props.date).utc().format("MMMM YYYY")}
       </div>
+      <div className="date-day">{dayjs(props.date).utc().format("DD")}</div>
     </section>
   );
 }

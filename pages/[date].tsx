@@ -1,9 +1,8 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import dayjs from "dayjs";
 
-import Date from "../components/date";
+import Sidebar from "../components/sidebar";
 import Post from "../components/post";
 
 import { IPost } from "../types/index";
@@ -23,9 +22,9 @@ const PostsPage: NextPage<IProps> = ({ date, posts }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="container">
-        <Date date={date} />
+      <Sidebar date={date} />
 
+      <section className="container">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
@@ -34,8 +33,7 @@ const PostsPage: NextPage<IProps> = ({ date, posts }) => {
           <article className="post">
             <div>
               <p>
-                <strong>Notícia não encontrada.</strong> Veja a newsletter de
-                hoje <Link href={`/`}>aqui</Link>.
+                <strong>Nenhuma notícia encontrada.</strong>
               </p>
             </div>
           </article>
