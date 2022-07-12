@@ -38,7 +38,7 @@ export default async function handler(
         categories: [],
         entities: Array.from(new Set(entities)),
         likes: 0,
-        date: new Date(date.toDate().setHours(0, 0, 0, 0)),
+        date: new Date(date.toDate().setHours(3, 0, 0, 0)),
       };
 
       await db?.collection("posts").insertOne(post);
