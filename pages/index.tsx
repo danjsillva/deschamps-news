@@ -35,6 +35,7 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
                 <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
                 última newsletter{" "}
                 <Link
+                  // @ts-ignore
                   href={`/${dayjs().prevBusinessDay().format("YYYY-MM-DD")}`}
                 >
                   aqui
