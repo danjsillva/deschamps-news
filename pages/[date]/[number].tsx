@@ -6,12 +6,12 @@ import Post from "../../components/post";
 
 import { IPost } from "../../types/index";
 
-interface Props {
+interface IProps {
   date: string;
   post: IPost;
 }
 
-const PostPage: NextPage<Props> = ({ date, post }) => {
+const PostPage: NextPage<IProps> = ({ date, post }) => {
   return (
     <main>
       <Head>

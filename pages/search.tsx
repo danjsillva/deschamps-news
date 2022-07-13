@@ -1,76 +1,32 @@
-import { useEffect, useState } from "react";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 
+import Sidebar from "../components/sidebar";
 import Post from "../components/post";
 
 import { IPost } from "../types/index";
 
-const SearchPage: NextPage = () => {
-  const router = useRouter();
+interface IProps {
+  search: string;
+  posts: IPost[];
+}
 
-  const [search, setSearch] = useState("");
-  const [count, setCount] = useState(0);
-  const [posts, setPosts] = useState<IPost[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const query = router.query.q as string;
-
-    setSearch(query);
-  }, [router.query.q]);
-
-  useEffect(() => {
-    if (search) {
-      handleGetPosts(search);
-    }
-  }, [search]);
-
-  const handleGetPosts = async (search: string) => {
-    setLoading(true);
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/search?q=${search}`
-    );
-    const documents = await response.json();
-
-    setCount(documents.length);
-    setPosts(documents);
-
-    setLoading(false);
-  };
-
+const SearchPage: NextPage<IProps> = ({ search, posts }) => {
   return (
     <main>
       <Head>
-        <title>Deschamps News - {search || "Busca"}</title>
+        <title>Deschamps News - {search ?? "Busca"}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="search-bar">
-        <section className="search-bar-container">
-          <div className="input-group">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            {loading ? (
-              <span className="input-status">Buscando</span>
-            ) : (
-              <span className="input-status">{count} resultado(s)</span>
-            )}
-          </div>
-        </section>
-      </section>
+      <Sidebar search={search} results={posts.length} />
 
-      <section className="container" style={{ marginTop: "32px" }}>
+      <section className="container">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
 
-        {!posts.length && !loading && (
+        {!posts.length && (
           <article className="post">
             <div>
               <p>
@@ -82,6 +38,22 @@ const SearchPage: NextPage = () => {
       </section>
     </main>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { q: search } = context.query;
+
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/posts/search?q=${search}`
+  );
+  const posts: IPost[] = await response.json();
+
+  return {
+    props: {
+      search,
+      posts,
+    },
+  };
 };
 
 export default SearchPage;

@@ -8,12 +8,12 @@ export default async function handler(
 ) {
   try {
     const db = await MongoDBHelper.connect();
-    const { q: query } = req.query;
+    const { q: search } = req.query;
 
     const posts = await db
       ?.collection("posts")
       .find({
-        text: { $regex: query, $options: "i" },
+        text: { $regex: search, $options: "i" },
       })
       .sort({ likes: -1 })
       .toArray();
