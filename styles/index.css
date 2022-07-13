@@ -21,7 +21,6 @@ main {
   justify-content: center;
   min-height: 100vh;
 }
-
 @media screen and (max-width: 900px) {
   main {
     flex-direction: column;
@@ -35,6 +34,11 @@ main {
   width: 640px;
   max-width: 90%;
   margin: 96px 0;
+}
+@media screen and (max-width: 900px) {
+  .container {
+    margin: 0;
+  }
 }
 
 .sidebar {
