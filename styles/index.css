@@ -34,7 +34,7 @@ main {
 .container {
   width: 640px;
   max-width: 90%;
-  margin-top: 96px;
+  margin: 96px 0;
 }
 
 .sidebar {
