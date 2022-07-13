@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
@@ -40,7 +40,7 @@ export default function Sidebar(props: IProps) {
   return (
     <aside className="sidebar">
       {props.date && (
-        <div>
+        <Fragment>
           <Date date={props.date} />
 
           <Calendar
@@ -55,11 +55,11 @@ export default function Sidebar(props: IProps) {
               dayjs(date).weekday() === 0 || dayjs(date).weekday() === 6
             }
           />
-        </div>
+        </Fragment>
       )}
 
       {props.search && (
-        <div>
+        <Fragment>
           <form onSubmit={handleSubmitSearch}>
             <div className="input-group">
               <input
@@ -71,7 +71,7 @@ export default function Sidebar(props: IProps) {
               <span className="input-status">{props.results} resultado(s)</span>
             </div>
           </form>
-        </div>
+        </Fragment>
       )}
     </aside>
   );
