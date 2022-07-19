@@ -49,7 +49,6 @@ main {
   width: 240px;
   top: 128px;
 }
-
 @media screen and (max-width: 900px) {
   .sidebar {
     width: 640px;

@@ -42,7 +42,14 @@ export default async function handler(
       };
 
       await db?.collection("posts").insertOne(post);
-      // await TwitterHelper.tweet(post);
+
+      if (
+        post.number !== 1 &&
+        !post.html.toLowerCase().includes("link patrocinado") &&
+        !post.html.toLowerCase().includes("link afiliado")
+      ) {
+        // await TwitterHelper.tweet(post);
+      }
     }
 
     return res.status(200).json({
