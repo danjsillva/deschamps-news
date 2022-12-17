@@ -1,9 +1,8 @@
 import { useState, useEffect, Fragment } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
-
-import Date from "./date";
 
 interface IProps {
   date?: string;
@@ -39,9 +38,9 @@ export default function Sidebar(props: IProps) {
 
   return (
     <aside className="sidebar">
-      <a href="/" className="title-link">
+      <Link href="/">
         <h1 className="title">Deschamps News</h1>
-      </a>
+      </Link>
 
       {props.date && (
         <Fragment>

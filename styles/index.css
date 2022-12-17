@@ -56,10 +56,7 @@ main {
   line-height: 1;
   text-align: right;
   margin-bottom: 64px;
-}
-
-.title-link {
-  text-decoration: none;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 900px) {
