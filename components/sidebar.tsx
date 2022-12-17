@@ -39,10 +39,12 @@ export default function Sidebar(props: IProps) {
 
   return (
     <aside className="sidebar">
+      <a href="/" className="title-link">
+        <h1 className="title">Deschamps News</h1>
+      </a>
+
       {props.date && (
         <Fragment>
-          <Date date={props.date} />
-
           <Calendar
             onChange={handleChangeDate}
             value={dayjs(props.date).toDate()}
