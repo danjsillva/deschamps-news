@@ -15,7 +15,7 @@ interface IProps {
 
 const HomePage: NextPage<IProps> = ({ date, posts }) => {
   return (
-    <main>
+    <main className="flex justify-center gap-12 my-24">
       <Head>
         <title>Deschamps News - Home</title>
         <link rel="icon" href="/favicon.ico" />
@@ -23,13 +23,13 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
 
       <Sidebar date={date} />
 
-      <section className="container">
+      <section className="w-[48rem]">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
 
         {!posts.length && (
-          <article className="post">
+          <article className="border border-solid">
             <div>
               <p>
                 <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a

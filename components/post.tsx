@@ -31,27 +31,34 @@ export default function Post(props: IProps) {
   };
 
   return (
-    <article className="post">
+    <article className="border-t py-6">
       {(props.post.html.toLowerCase().includes("link patrocinado") ||
         props.post.html.toLowerCase().includes("link afiliado")) && (
-        <span className="post-tag">Patrocinado</span>
+        <span className="inline-block text-sm text-white bg-blue-500 rounded-full py-1 px-2 mb-2">
+          Patrocinado
+        </span>
       )}
-      <div dangerouslySetInnerHTML={{ __html: props.post.html }} />
+      <div
+        dangerouslySetInnerHTML={{ __html: props.post.html }}
+        className="font-normal"
+      />
 
       {props.post.entities.map((entity) => (
         <Link href={`/search?q=${entity}`} key={entity} passHref>
-          <span className="post-keywords">{entity}</span>
+          <span className="inline-block text-sm text-gray-400 bg-gray-100 rounded-full py-1 px-2 mt-2 mr-2 cursor-pointer">
+            {entity}
+          </span>
         </Link>
       ))}
 
       {
-        <div className="post-actions">
-          <div onClick={handleClickLike} className="post-actions-group">
-            <FiHeart size={24} style={{ marginRight: "8px" }} />{" "}
+        <div className="flex justify-between align-middle text-gray-400 mt-4">
+          <div onClick={handleClickLike} className="flex">
+            <FiHeart size={24} className="mr-2 cursor-pointer" />{" "}
             {props.post.likes}
           </div>
 
-          <span style={{ fontSize: "14px" }}>
+          <span className="text-sm">
             {dayjs(props.post.date).utc().format("DD [de] MMMM [de] YYYY")}
           </span>
 
@@ -68,7 +75,7 @@ export default function Post(props: IProps) {
                 toast("Link copiado para a sua área de transferência!");
               }}
               size={24}
-              style={{ cursor: "pointer" }}
+              className="cursor-pointer"
             />
           </div>
         </div>

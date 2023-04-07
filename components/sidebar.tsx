@@ -37,9 +37,9 @@ export default function Sidebar(props: IProps) {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className="sticky flex flex-col items-end text-end w-[24rem] mt-16">
       <Link href="/">
-        <h1 className="title">Deschamps News</h1>
+        <h1 className="text-6xl font-bold">Deschamps News</h1>
       </Link>
 
       {props.date && (
