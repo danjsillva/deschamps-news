@@ -13,7 +13,7 @@ interface IProps {
 
 const SearchPage: NextPage<IProps> = ({ search, posts }) => {
   return (
-    <main className="flex justify-center gap-9 my-24">
+    <main className="flex justify-center gap-9 my-24 antialiased">
       <Head>
         <title>Deschamps News - {search ?? "Busca"}</title>
         <link rel="icon" href="/favicon.ico" />

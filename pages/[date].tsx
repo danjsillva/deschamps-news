@@ -14,7 +14,7 @@ interface IProps {
 
 const PostsPage: NextPage<IProps> = ({ date, posts }) => {
   return (
-    <main className="flex justify-center gap-9 my-24">
+    <main className="flex justify-center gap-9 my-24 antialiased">
       <Head>
         <title>
           Deschamps News - {dayjs(date).utc().format("DD [de] MMM [de] YYYY")}

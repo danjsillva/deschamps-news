@@ -15,7 +15,7 @@ interface IProps {
 
 const HomePage: NextPage<IProps> = ({ date, posts }) => {
   return (
-    <main className="flex justify-center gap-9 my-24">
+    <main className="flex justify-center gap-9 my-24 antialiased">
       <Head>
         <title>Deschamps News - Home</title>
         <link rel="icon" href="/favicon.ico" />
