@@ -13,7 +13,7 @@ interface IProps {
 
 const SearchPage: NextPage<IProps> = ({ search, posts }) => {
   return (
-    <main className="flex justify-center gap-12 my-24">
+    <main className="flex justify-center gap-9 my-24">
       <Head>
         <title>Deschamps News - {search ?? "Busca"}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -21,7 +21,7 @@ const SearchPage: NextPage<IProps> = ({ search, posts }) => {
 
       <Sidebar search={search} results={posts.length} />
 
-      <section className="w-[48rem]">
+      <section className="w-[36rem]">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

@@ -13,7 +13,7 @@ interface IProps {
 
 const PostPage: NextPage<IProps> = ({ date, post }) => {
   return (
-    <main className="flex justify-center gap-12 my-24">
+    <main className="flex justify-center gap-9 my-24">
       <Head>
         <title>
           Deschamps News -{" "}
@@ -24,7 +24,7 @@ const PostPage: NextPage<IProps> = ({ date, post }) => {
 
       <Sidebar date={date} />
 
-      <section className="w-[48rem]">
+      <section className="w-[36rem]">
         {!!post && <Post post={post} />}
 
         {!post && (
