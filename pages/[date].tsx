@@ -14,7 +14,7 @@ interface IProps {
 
 const PostsPage: NextPage<IProps> = ({ date, posts }) => {
   return (
-    <main>
+    <main className="flex justify-center gap-9 my-24 antialiased">
       <Head>
         <title>
           Deschamps News - {dayjs(date).utc().format("DD [de] MMM [de] YYYY")}
@@ -24,13 +24,13 @@ const PostsPage: NextPage<IProps> = ({ date, posts }) => {
 
       <Sidebar date={date} />
 
-      <section className="container">
+      <section className="w-[36rem]">
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
 
         {!posts.length && (
-          <article className="post">
+          <article className="border-t py-6 text-lg">
             <div>
               <p>
                 <strong>Nenhuma notícia encontrada.</strong>

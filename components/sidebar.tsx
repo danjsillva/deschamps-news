@@ -37,9 +37,9 @@ export default function Sidebar(props: IProps) {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className="sticky top-0 flex flex-col items-end text-end w-[24rem] mt-16">
       <Link href="/">
-        <h1 className="title">Deschamps News</h1>
+        <h1 className="text-6xl font-bold">Deschamps News</h1>
       </Link>
 
       {props.date && (
@@ -61,15 +61,16 @@ export default function Sidebar(props: IProps) {
 
       {props.search && (
         <Fragment>
-          <form onSubmit={handleSubmitSearch}>
-            <div className="input-group">
+          <form onSubmit={handleSubmitSearch} className="mt-10">
+            <div className="border rounded py-3 px-4">
               <input
                 type="text"
                 value={search}
+                className="outline-none"
                 onChange={(e) => setSearch(e.target.value)}
               />
 
-              <span className="input-status">{props.results} resultado(s)</span>
+              <span className="text-sm text-gray-400">{props.results} resultado(s)</span>
             </div>
           </form>
         </Fragment>
