@@ -29,7 +29,7 @@ const HomePage: NextPage<IProps> = ({ date, posts }) => {
         ))}
 
         {!posts.length && (
-          <article className="border border-solid">
+          <article className="border-t py-6 text-lg">
             <div>
               <p>
                 <strong>As notícias de hoje chegam lá pelas 11.</strong> Veja a
