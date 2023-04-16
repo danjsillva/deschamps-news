@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
@@ -11,11 +10,7 @@ interface IProps {
 }
 
 export default function Post(props: IProps) {
-  const [loading, setLoading] = useState(false);
-
   const handleClickLike = async () => {
-    setLoading(true);
-
     props.post.likes++;
 
     const response = await fetch(
@@ -26,8 +21,6 @@ export default function Post(props: IProps) {
         method: "POST",
       }
     );
-
-    setLoading(false);
   };
 
   return (
