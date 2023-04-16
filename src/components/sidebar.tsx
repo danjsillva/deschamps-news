@@ -18,7 +18,11 @@ export default function Sidebar(props: IProps) {
     setSearch(props.search);
   }, [props.search]);
 
-  const handleChangeDate = (value: Date) => {
+  const handleChangeDate = (value: Date | any) => {
+    if (!(value instanceof Date)) {
+      return;
+    }
+
     if (dayjs(value).isToday()) {
       return router.push("/");
     }
