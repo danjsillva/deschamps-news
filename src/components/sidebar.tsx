@@ -18,7 +18,11 @@ export default function Sidebar(props: IProps) {
     setSearch(props.search);
   }, [props.search]);
 
-  const handleChangeDate = (value: Date) => {
+  const handleChangeDate = (value: Date | any) => {
+    if (!(value instanceof Date)) {
+      return;
+    }
+
     if (dayjs(value).isToday()) {
       return router.push("/");
     }
@@ -38,8 +42,8 @@ export default function Sidebar(props: IProps) {
 
   return (
     <aside className="sticky top-0 flex flex-col items-end text-end w-[24rem] mt-16">
-      <Link href="/">
-        <h1 className="text-6xl font-bold">Deschamps News</h1>
+      <Link href="/" className="!no-underline">
+        <h1 className="text-6xl font-bold text-black">Deschamps News</h1>
       </Link>
 
       {props.date && (
