@@ -14,7 +14,7 @@ const imapConfig = {
     user: process.env.IMAP_USER!,
     pass: process.env.IMAP_PASS!,
   },
-  logger: false,
+  logger: undefined,
 };
 
 export default async function handler(
