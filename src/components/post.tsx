@@ -19,14 +19,13 @@ export default function Post(props: IProps) {
         .format("YYYY-MM-DD")}/${props.post.number}/likes`,
       {
         method: "POST",
-      }
+      },
     );
   };
 
   return (
-    <article className="border-t py-6 text-lg">
-      {(props.post.html.toLowerCase().includes("link patrocinado") ||
-        props.post.html.toLowerCase().includes("link afiliado")) && (
+    <article className="border-t border-gray-200 py-6 text-lg">
+      {props.post.sponsored && (
         <span className="inline-block text-sm text-white bg-blue-500 rounded-full py-1 px-2 mb-2">
           Patrocinado
         </span>
@@ -58,10 +57,10 @@ export default function Post(props: IProps) {
               onClick={() => {
                 navigator.clipboard.writeText(
                   `${process.env.NEXT_PUBLIC_APP_BASE_URL}/${dayjs(
-                    props.post.date
+                    props.post.date,
                   )
                     .utc()
-                    .format("YYYY-MM-DD")}/${props.post.number}`
+                    .format("YYYY-MM-DD")}/${props.post.number}`,
                 );
                 toast("Link copiado para a sua área de transferência!");
               }}

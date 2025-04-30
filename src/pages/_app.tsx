@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Component {...pageProps} />
+
       <ToastContainer position="bottom-left" hideProgressBar={true} />
     </>
   );

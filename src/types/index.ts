@@ -1,10 +1,11 @@
 export interface IPost {
   _id?: string;
+  date: string;
   number: number;
-  html: string;
   text: string;
+  html: string;
   categories: string[];
   entities: string[];
+  sponsored: boolean;
   likes: number;
-  date: string;
 }

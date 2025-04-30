@@ -1,17 +1,22 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Db } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
-const options = {};
-const client = new MongoClient(String(uri), options);
 
-const connect = async () => {
-  try {
-    await client.connect();
+if (!uri) {
+  throw new Error("MONGODB_URI environment variable is not set");
+}
 
-    return client.db("deschamps-news");
-  } catch (error) {
-    console.error(error);
-  }
+let client: MongoClient;
+let db: Db;
+
+const connect = async (): Promise<Db> => {
+  if (db) return db;
+
+  client = new MongoClient(uri);
+  await client.connect();
+  db = client.db("deschamps-news");
+
+  return db;
 };
 
 export default { connect };
