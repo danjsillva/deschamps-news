@@ -16,7 +16,7 @@
       ]
     }
   ],
-  "cron": [
+  "crons": [
     {
       "path": "/api/fetch-mails",
       "schedule": "*/15 * * * *"
