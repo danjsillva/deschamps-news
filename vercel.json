@@ -19,7 +19,7 @@
   "crons": [
     {
       "path": "/api/fetch-mails",
-      "schedule": "*/15 * * * *"
+      "schedule": "30 11 * * *"
     }
   ]
 }
